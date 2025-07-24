@@ -49,6 +49,49 @@
             color: #005f73;
             margin-top: 0.5rem;
         }
+        
+        /* Lab00 horizontal card styles */
+        .lab00-section {
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: center;
+        }
+        .lab00-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            padding: 1.5rem 2rem;
+            width: 100%;
+            max-width: 1200px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 120px;
+        }
+        .lab00-card h2 {
+            font-size: 1.4rem;
+            color: #003440;
+            margin: 0;
+            margin-bottom: 1rem;
+        }
+        .lab00-card .button-link {
+            display: inline-block;
+            text-align: center;
+            background-color: #007791;
+            color: #ffffff;
+            padding: 0.8rem 1rem;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+            width: fit-content;
+            align-self: flex-start;
+        }
+        .lab00-card .button-link:hover {
+            background-color: #005f73;
+        }
+        
         main {
             display: flex;
             flex-wrap: wrap;
@@ -193,6 +236,10 @@
                 width: 100%;
                 max-width: 100%;
             }
+            .lab00-card {
+                width: 100%;
+                max-width: 100%;
+            }
             .section-title {
                 font-size: 1.8rem;
             }
@@ -207,8 +254,17 @@
         </div>
         <header>
             <h1>Maritime Informatics & Robotics</h1>
-            <p>Summer School 2025 Workshop Notes (Lab01 - Lab04)</p>
+            <p>Summer School 2025 Workshop Notes (Lab00 - Lab04)</p>
         </header>
+        
+        <!-- Lab00 horizontal card -->
+        <section class="lab00-section">
+            <div class="lab00-card">
+                <h2>Hardware Intro & Explanation</h2>
+                <a href="lab00.pdf" class="button-link" target="_blank">View Lab00 Notes</a>
+            </div>
+        </section>
+        
         <main>
             <div class="card">
                 <h2>Lab01: Ardupilot software installation (Rover firmware), mission planner, configuration, setup, logging</h2>
@@ -252,7 +308,7 @@
                     <h3 class="instructor-name">Thomas Kogias</h3>
                     <a href="mailto:tkogias@aegean.gr" class="instructor-email">tkogias@aegean.gr</a>
                     <div class="instructor-bio">
-                        Thomas Kogias is a computer science educator and researcher at the University of the Aegean, where he teaches subjects such as web development, software engineering, and information systems. As a founding member of the SmartMove Lab, he specializes in autonomous marine systems and intelligent maritime technologies, focusing on real-world integration through custom communication and control solutions. He actively involves students in applied lab work and research, led the university’s team in the first Aegean RoBoat Race, and contributes to EU-funded projects, including AR-based maritime training tools and mobile software development.
+                        Thomas Kogias is a computer science educator and researcher at the University of the Aegean, where he teaches subjects such as web development, software engineering, and information systems. As a founding member of the SmartMove Lab, he specializes in autonomous marine systems and intelligent maritime technologies, focusing on real-world integration through custom communication and control solutions. He actively involves students in applied lab work and research, led the university's team in the first Aegean RoBoat Race, and contributes to EU-funded projects, including AR-based maritime training tools and mobile software development.
                     </div>
                 </div>
                 <div class="instructor-card">
@@ -260,7 +316,7 @@
                     <h3 class="instructor-name">Nikos Sapountzis</h3>
                     <a href="mailto:nsapountzis@aegean.gr" class="instructor-email">nsapountzis@aegean.gr</a>
                     <div class="instructor-bio">
-                        Nickolas Sapountzis is a research intern in the Intelligent Transportation Systems Lab (SmartMove) at the Department of Product and Systems Design Engineering of the University of the Aegean. He specializes in the development and deployment of autonomous surface vessels, with a primary focus on programming. This includes writing and optimizing software for real-time decision-making, sensor integration, and path planning. In addition to programming, he also deals with interfacing hardware components such as IMUs, GPS modules, LIDAR, and microcontrollers. His responsibilities also extend to the design phase where he helps model and prototype the physical structure of the USVs using CAD tools and rapid prototyping methods such as FDM. Beyond technical contributions in programming and design, Nick also serves as a USV pilot for field operations. This dual role of lab-baaed development and fieldwork helps Nick bridge theory and application, ensuring that the lab’s systems are technically robust and mission-ready for real world maritime environments.
+                        Nickolas Sapountzis is a research intern in the Intelligent Transportation Systems Lab (SmartMove) at the Department of Product and Systems Design Engineering of the University of the Aegean. He specializes in the development and deployment of autonomous surface vessels, with a primary focus on programming. This includes writing and optimizing software for real-time decision-making, sensor integration, and path planning. In addition to programming, he also deals with interfacing hardware components such as IMUs, GPS modules, LIDAR, and microcontrollers. His responsibilities also extend to the design phase where he helps model and prototype the physical structure of the USVs using CAD tools and rapid prototyping methods such as FDM. Beyond technical contributions in programming and design, Nick also serves as a USV pilot for field operations. This dual role of lab-baaed development and fieldwork helps Nick bridge theory and application, ensuring that the lab's systems are technically robust and mission-ready for real world maritime environments.
                     </div>
                 </div>
             </div>
