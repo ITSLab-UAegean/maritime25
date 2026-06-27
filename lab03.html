@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="pandoc" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
-  <title>Lab 03 — SITL &amp; Auto Modes (condensed)</title>
+  <title>Lab 03: Software In The Loop (SITL) &amp; Auto Modes</title>
   <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -52,38 +52,39 @@ color: #aaaaaa;
 }
 pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa; padding-left: 4px; }
 div.sourceCode
-{ background-color: #f8f8f8; }
+{ }
 @media screen {
 pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
 }
-code span.al { color: #ef2929; } 
-code span.an { color: #8f5902; font-weight: bold; font-style: italic; } 
-code span.at { color: #204a87; } 
-code span.bn { color: #0000cf; } 
-code span.cf { color: #204a87; font-weight: bold; } 
-code span.ch { color: #4e9a06; } 
-code span.cn { color: #8f5902; } 
-code span.co { color: #8f5902; font-style: italic; } 
-code span.cv { color: #8f5902; font-weight: bold; font-style: italic; } 
-code span.do { color: #8f5902; font-weight: bold; font-style: italic; } 
-code span.dt { color: #204a87; } 
-code span.dv { color: #0000cf; } 
-code span.er { color: #a40000; font-weight: bold; } 
+code span.al { color: #ff0000; font-weight: bold; } 
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.at { color: #7d9029; } 
+code span.bn { color: #40a070; } 
+code span.bu { color: #008000; } 
+code span.cf { color: #007020; font-weight: bold; } 
+code span.ch { color: #4070a0; } 
+code span.cn { color: #880000; } 
+code span.co { color: #60a0b0; font-style: italic; } 
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.do { color: #ba2121; font-style: italic; } 
+code span.dt { color: #902000; } 
+code span.dv { color: #40a070; } 
+code span.er { color: #ff0000; font-weight: bold; } 
 code span.ex { } 
-code span.fl { color: #0000cf; } 
-code span.fu { color: #204a87; font-weight: bold; } 
-code span.im { } 
-code span.in { color: #8f5902; font-weight: bold; font-style: italic; } 
-code span.kw { color: #204a87; font-weight: bold; } 
-code span.op { color: #ce5c00; font-weight: bold; } 
-code span.ot { color: #8f5902; } 
-code span.pp { color: #8f5902; font-style: italic; } 
-code span.sc { color: #ce5c00; font-weight: bold; } 
-code span.ss { color: #4e9a06; } 
-code span.st { color: #4e9a06; } 
-code span.va { color: #000000; } 
-code span.vs { color: #4e9a06; } 
-code span.wa { color: #8f5902; font-weight: bold; font-style: italic; } 
+code span.fl { color: #40a070; } 
+code span.fu { color: #06287e; } 
+code span.im { color: #008000; font-weight: bold; } 
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } 
+code span.kw { color: #007020; font-weight: bold; } 
+code span.op { color: #666666; } 
+code span.ot { color: #007020; } 
+code span.pp { color: #bc7a00; } 
+code span.sc { color: #4070a0; } 
+code span.ss { color: #bb6688; } 
+code span.st { color: #4070a0; } 
+code span.va { color: #19177c; } 
+code span.vs { color: #4070a0; } 
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } 
 </style>
   <style type="text/css">
 html { font-size: 16px; }
@@ -139,130 +140,11 @@ pre, table { page-break-inside: avoid; }
 </head>
 <body>
 <header id="title-block-header">
-<h1 class="title">Lab 03 — SITL &amp; Auto Modes (condensed)</h1>
+<h1 class="title">Lab 03: Software In The Loop (SITL) &amp; Auto
+Modes</h1>
 </header>
-<nav id="TOC" role="doc-toc">
-<ul>
-<li><a href="#lab-03-sitl-condensed-work-in-progress" id="toc-lab-03-sitl-condensed-work-in-progress">Lab 03: SITL, condensed
-(work in progress)</a>
-<ul>
-<li><a href="#structure-canonical-skeleton" id="toc-structure-canonical-skeleton">Structure (canonical
-skeleton)</a></li>
-<li><a href="#what-sitl-is-and-what-this-lab-is-for" id="toc-what-sitl-is-and-what-this-lab-is-for">1. What SITL is, and what
-this lab is for</a>
-<ul>
-<li><a href="#one-autopilot-several-ways-to-command-it" id="toc-one-autopilot-several-ways-to-command-it">One autopilot, several
-ways to command it</a></li>
-<li><a href="#why-simulate-instead-of-just-using-the-boat" id="toc-why-simulate-instead-of-just-using-the-boat">Why simulate
-instead of just using the boat</a></li>
-<li><a href="#it-is-yours-to-keep" id="toc-it-is-yours-to-keep">It is
-yours to keep</a></li>
-<li><a href="#where-this-sits-in-the-bigger-picture" id="toc-where-this-sits-in-the-bigger-picture">Where this sits in the
-bigger picture</a></li>
-<li><a href="#what-sitl-does-not-do" id="toc-what-sitl-does-not-do">What
-SITL does not do</a></li>
-<li><a href="#what-you-will-do-in-this-lab" id="toc-what-you-will-do-in-this-lab">What you will do in this
-lab</a></li>
-</ul></li>
-<li><a href="#prerequisites-environment" id="toc-prerequisites-environment">2. Prerequisites / environment</a>
-<ul>
-<li><a href="#what-you-need" id="toc-what-you-need">What you
-need</a></li>
-<li><a href="#windows-install-ubuntu-with-wsl2" id="toc-windows-install-ubuntu-with-wsl2">Windows: install Ubuntu with
-WSL2</a></li>
-<li><a href="#check-that-graphical-apps-work" id="toc-check-that-graphical-apps-work">Check that graphical apps
-work</a></li>
-<li><a href="#if-the-xeyes-test-failed-add-an-x-server" id="toc-if-the-xeyes-test-failed-add-an-x-server">If the xeyes test
-failed: add an X server</a></li>
-<li><a href="#macos" id="toc-macos">macOS</a></li>
-<li><a href="#already-on-linux" id="toc-already-on-linux">Already on
-Linux?</a></li>
-</ul></li>
-<li><a href="#build-sitl" id="toc-build-sitl">3. Build SITL</a>
-<ul>
-<li><a href="#get-the-source-code" id="toc-get-the-source-code">Get the
-source code</a></li>
-<li><a href="#switch-to-a-stable-version" id="toc-switch-to-a-stable-version">Switch to a stable version</a></li>
-<li><a href="#install-the-prerequisites" id="toc-install-the-prerequisites">Install the prerequisites</a></li>
-<li><a href="#compile-sitl" id="toc-compile-sitl">Compile SITL</a></li>
-<li><a href="#quick-check-did-it-work" id="toc-quick-check-did-it-work">Quick check: did it work?</a></li>
-</ul></li>
-<li><a href="#running-sitl-for-the-first-time" id="toc-running-sitl-for-the-first-time">4. Running SITL for the first
-time</a>
-<ul>
-<li><a href="#set-the-boat-parameters-and-a-starting-location" id="toc-set-the-boat-parameters-and-a-starting-location">Set the boat
-parameters and a starting location</a></li>
-<li><a href="#a-folder-to-run-from" id="toc-a-folder-to-run-from">A
-folder to run from</a></li>
-<li><a href="#what-each-part-of-the-command-does" id="toc-what-each-part-of-the-command-does">What each part of the
-command does</a></li>
-<li><a href="#watching-and-commanding-the-boat-from-a-ground-station" id="toc-watching-and-commanding-the-boat-from-a-ground-station">Watching
-and commanding the boat from a ground station</a></li>
-</ul></li>
-<li><a href="#driving-it-modes-console" id="toc-driving-it-modes-console">5. Driving it: modes + console</a>
-<ul>
-<li><a href="#typing-commands-the-console" id="toc-typing-commands-the-console">Typing commands: the
-console</a></li>
-<li><a href="#a-first-drive-in-guided" id="toc-a-first-drive-in-guided">A first drive in GUIDED</a></li>
-<li><a href="#the-modes-you-will-use" id="toc-the-modes-you-will-use">The modes you will use</a></li>
-<li><a href="#manual-driving-lives-on-the-boat-not-the-sim" id="toc-manual-driving-lives-on-the-boat-not-the-sim">Manual driving
-lives on the boat, not the sim</a></li>
-<li><a href="#check-it-is-working" id="toc-check-it-is-working">Check it
-is working</a></li>
-</ul></li>
-<li><a href="#environment-params-meltemi-winds" id="toc-environment-params-meltemi-winds">6. Environment params (Meltemi
-winds)</a>
-<ul>
-<li><a href="#create-the-weather-file" id="toc-create-the-weather-file">Create the weather file</a></li>
-<li><a href="#launch-with-the-weather-on" id="toc-launch-with-the-weather-on">Launch with the weather on</a></li>
-<li><a href="#feel-the-difference" id="toc-feel-the-difference">Feel the
-difference</a></li>
-</ul></li>
-<li><a href="#missions-auto-mode" id="toc-missions-auto-mode">7.
-Missions / AUTO mode</a>
-<ul>
-<li><a href="#run-the-sample-mission" id="toc-run-the-sample-mission">Run the sample mission</a></li>
-<li><a href="#the-mission-commands" id="toc-the-mission-commands">The
-mission commands</a></li>
-<li><a href="#what-is-inside-the-mission-file" id="toc-what-is-inside-the-mission-file">What is inside the mission
-file</a></li>
-<li><a href="#build-your-own-mission-in-mission-planner" id="toc-build-your-own-mission-in-mission-planner">Build your own
-mission in Mission Planner</a></li>
-<li><a href="#run-a-mission-in-the-wind" id="toc-run-a-mission-in-the-wind">Run a mission in the wind</a></li>
-<li><a href="#going-further" id="toc-going-further">Going
-further</a></li>
-</ul></li>
-<li><a href="#multi-vehicle-sitl" id="toc-multi-vehicle-sitl">8.
-Multi-vehicle SITL</a></li>
-<li><a href="#shutdown-troubleshooting" id="toc-shutdown-troubleshooting">9. Shutdown + troubleshooting</a></li>
-<li><a href="#command-quick-reference" id="toc-command-quick-reference">10. Command quick reference</a></li>
-</ul></li>
-</ul>
-</nav>
-<h1 id="lab-03-sitl-condensed-work-in-progress">Lab 03: SITL, condensed
-(work in progress)</h1>
-<p>A tighter, student-facing companion to the full Lab 03 document. This
-single file is the working draft; it will be split into three
-deliverable files (the three “units” below) at the end. Sections drafted
-so far: 1 through 7.</p>
-<h2 id="structure-canonical-skeleton">Structure (canonical
-skeleton)</h2>
-<p><strong>Unit 1 — Setup &amp; Build</strong> 1. What SITL is + lab
-goal <em>(drafted)</em> — Doc §1 2. Prerequisites / environment,
-incl. WSL2 <em>(drafted)</em> — Doc §2.1–2.3 3. Build SITL
-<em>(drafted)</em> — cheat-sheet + Doc §2.4</p>
-<p><strong>Unit 2 — Running &amp; Driving</strong> 4. First run, command
-dissected <em>(drafted)</em> — Doc §2.5 + §2.6 + §3.1–3.3 5. Driving it:
-modes + console <em>(drafted)</em> — Doc §3.4–3.5 + cheat-sheet 6.
-Environment params (Meltemi) <em>(drafted)</em> — Doc §2.7–2.8</p>
-<p><strong>Unit 3 — Scenarios + Reference</strong> 7. Missions / AUTO
-mode <em>(drafted)</em> — Doc §4 8. Multi-vehicle <em>(to draft)</em> —
-Doc §5 9. Shutdown + troubleshooting table <em>(to draft)</em> — Doc §6
-+ doc-QA findings 10. Command quick reference <em>(to draft,
-new)</em></p>
-<hr />
-<h2 id="what-sitl-is-and-what-this-lab-is-for">1. What SITL is, and what
-this lab is for</h2>
+<h2 id="1-what-sitl-is-and-what-this-lab-is-for">1. What SITL is, and
+what this lab is for</h2>
 <p>When you work with an Unmanned Surface Vessel (USV) (our little boats
 for example), the part that actually drives it is a piece of software
 called the <strong>autopilot</strong>. On our boats that software is
@@ -273,7 +155,7 @@ these boards rather than a single product, and ours are the common
 Pixhawk 2.4.8. Some sensors are built into the board itself, an
 accelerometer and a gyroscope that sense acceleration and turning, while
 others plug in around it, mainly a GPS unit (a u-blox NEO-M8N) that
-fixes the boat’s position and also carries the compass that gives its
+fixes the boat&#39;s position and also carries the compass that gives its
 heading. The autopilot reads all of these and decides what the motors
 should do to hold a heading, reach a point, or follow a planned
 route.</p>
@@ -344,17 +226,21 @@ you a confident first tour, and leave you with a tool that is now yours.
 Once it is set up it stays on your machine for the rest of the summer
 school and well beyond, ready whenever you want to experiment further at
 your own pace, with no hardware required.</p>
-<p>One last thing: these notes are still a work in progress. They will
-be shared with you in an online repository (on GitHub, the same place
-the Lab04 code lives), so any corrections or additions we make will show
-up there, and you can always come back for the latest version.</p>
+<p>One last thing: treat these notes as a tested, best-effort guide
+rather than the final word. We have walked through them step by step to
+verify and correct them, but SITL is a big field and the exact behaviour
+can shift with your operating system, software versions, and hardware,
+so the odd small difference or rough edge is possible. If something does
+not match what you read here, it is usually a difference in your setup
+rather than a mistake on your part. This page also gets updated over
+time, so you can always come back for the latest version.</p>
 <h3 id="where-this-sits-in-the-bigger-picture">Where this sits in the
 bigger picture</h3>
 <p>On the real boats, the autopilot does not work alone. A small
 companion computer, a Raspberry Pi, rides alongside it running Python
 code that talks to the autopilot: reading its telemetry (the live data
 the boat reports back, such as position, speed, heading, and battery;
-the word means “measurement from a distance”), sending it commands, and
+the word means &quot;measurement from a distance&quot;), sending it commands, and
 coordinating with other boats or a shore station over a network. SITL
 lets you develop and test that kind of Python code on a single laptop,
 with the simulator standing in for the whole boat. That is exactly what
@@ -362,14 +248,14 @@ with the simulator standing in for the whole boat. That is exactly what
 environment you set up here. In short, <strong>this lab lays the
 foundation, and the next one puts code on top of it</strong>.</p>
 <h3 id="what-sitl-does-not-do">What SITL does not do</h3>
-<p>SITL simulates the autopilot, its navigation sensors, and the boat’s
+<p>SITL simulates the autopilot, its navigation sensors, and the boat&#39;s
 motion, and it does this faithfully. It does not simulate everything.
 There is no simulated camera and no computer vision, for example, so
 something like visual obstacle detection cannot be tested here directly.
 For this lab that is no limitation at all: you will be driving the boat
 and running missions, which SITL models well. (Other simulators such as
 Gazebo or AirSim can add visual detail, at the cost of a much heavier
-setup; ArduPilot’s SITL is the simplest and most direct way in, which is
+setup; ArduPilot&#39;s SITL is the simplest and most direct way in, which is
 why we use it.)</p>
 <h3 id="what-you-will-do-in-this-lab">What you will do in this lab</h3>
 <p>Over the next few hours you will:</p>
@@ -383,9 +269,10 @@ it to a point on the map, and bring it home.</li>
 <p>By the end you will have a working simulator you understand and own,
 ready to carry into the rest of the summer school.</p>
 <hr />
-<h2 id="prerequisites-environment">2. Prerequisites / environment</h2>
+<h2 id="2-prerequisites--environment">2. Prerequisites /
+environment</h2>
 <p>The goal of this section is to get a Linux environment ready on your
-machine, because ArduPilot’s SITL is built and run on Linux. What you do
+machine, because ArduPilot&#39;s SITL is built and run on Linux. What you do
 depends on your operating system. Most of you are on Windows, so that is
 the path we cover in most detail.</p>
 <h3 id="what-you-need">What you need</h3>
@@ -404,14 +291,14 @@ WSL2</h3>
 <strong>WSL2</strong> (Windows Subsystem for Linux, version 2). Your
 Ubuntu lives alongside Windows and shares its files and network, and
 that is where everything in this lab happens. The full official
-instructions are here if you ever need them: <a href="https://ardupilot.org/dev/docs/building-setup-windows.html" class="uri">https://ardupilot.org/dev/docs/building-setup-windows.html</a>.</p>
+instructions are here if you ever need them: <a href="https://ardupilot.org/dev/docs/building-setup-windows.html">https://ardupilot.org/dev/docs/building-setup-windows.html</a>.</p>
 <p>On an up-to-date Windows 10 or Windows 11 with administrator rights
 (the normal case for a personal laptop), installation is
 straightforward:</p>
 <ol type="1">
 <li><p>Open <strong>Windows Terminal</strong> (or PowerShell) <strong>as
-administrator</strong>: right click it in the Start menu and choose “Run
-as administrator”.</p></li>
+administrator</strong>: right click it in the Start menu and choose &quot;Run
+as administrator&quot;.</p></li>
 <li><p>Run:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>install <span class="op">-</span>d Ubuntu-24<span class="op">.</span><span class="dv">04</span></span></code></pre></div>
 <p>This turns on the needed Windows features and installs Ubuntu 24.04.
@@ -432,7 +319,7 @@ run the same command once more:</p>
 <p>This time it downloads and installs Ubuntu, then asks for the
 username and password.</p></li>
 <li><p>When prompted, create a <strong>Linux username and
-password</strong>. Pick any you like. This password is for Linux’s
+password</strong>. Pick any you like. This password is for Linux&#39;s
 <code>sudo</code> (the command that runs admin tasks inside Ubuntu); it
 is separate from your Windows login. You will not see anything on screen
 as you type it, which is normal.</p></li>
@@ -469,27 +356,25 @@ failed: add an X server</h3>
 <p>This step is almost always Windows 10 only; if <code>xeyes</code>
 already worked, skip it.</p>
 <p>The piece that lets Linux draw windows on your screen is called an
-<strong>X server</strong>. Windows 11’s WSLg already includes one; older
+<strong>X server</strong>. Windows 11&#39;s WSLg already includes one; older
 setups do not, so you add one called <strong>VcXsrv</strong>.</p>
 <ol type="1">
-<li><p>Download and install <strong>VcXsrv</strong> from its official
-page: <a href="https://sourceforge.net/projects/vcxsrv/" class="uri">https://sourceforge.net/projects/vcxsrv/</a>.</p></li>
-<li><p>Launch it through <strong>XLaunch</strong> and choose these
-options:</p>
+<li>Download and install <strong>VcXsrv</strong> from its official page:
+<a href="https://sourceforge.net/projects/vcxsrv/">https://sourceforge.net/projects/vcxsrv/</a>.</li>
+<li>Launch it through <strong>XLaunch</strong> and choose these options:
 <ul>
 <li><strong>Multiple windows</strong></li>
 <li><strong>Display number: -1</strong></li>
 <li><strong>Start no client</strong></li>
 <li><strong>Disable access control</strong> (tick this box)</li>
 </ul></li>
-<li><p>Tell Ubuntu where to send its windows. Add this line to the end
-of your <code>~/.bashrc</code> file (the file that runs each time you
-open an Ubuntu terminal):</p>
+<li>Tell Ubuntu where to send its windows. Add this line to the end of
+your <code>~/.bashrc</code> file (the file that runs each time you open
+an Ubuntu terminal):
 <div class="sourceCode" id="cb4"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="bu">export</span> <span class="va">DISPLAY</span><span class="op">=</span><span class="va">$(</span><span class="fu">grep</span> <span class="at">-m</span> 1 nameserver /etc/resolv.conf <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{print $2}&#39;</span><span class="va">)</span>:0</span></code></pre></div>
-<p>Then reload it with <code>source ~/.bashrc</code>, or just close and
-reopen the Ubuntu terminal.</p></li>
-<li><p>Run <code>xeyes</code> again. The window should now
-appear.</p></li>
+Then reload it with <code>source ~/.bashrc</code>, or just close and
+reopen the Ubuntu terminal.</li>
+<li>Run <code>xeyes</code> again. The window should now appear.</li>
 </ol>
 <p>You only add the <code>~/.bashrc</code> line once, but <strong>VcXsrv
 has to be running</strong> whenever you launch SITL, so start it
@@ -497,7 +382,7 @@ has to be running</strong> whenever you launch SITL, so start it
 <h3 id="macos">macOS</h3>
 <p>SITL builds and runs on macOS too, but the setup is different: it
 uses the Homebrew package manager and a few extra steps. Follow
-ArduPilot’s official macOS guide: <a href="https://ardupilot.org/dev/docs/building-setup-mac.html" class="uri">https://ardupilot.org/dev/docs/building-setup-mac.html</a>.
+ArduPilot&#39;s official macOS guide: <a href="https://ardupilot.org/dev/docs/building-setup-mac.html">https://ardupilot.org/dev/docs/building-setup-mac.html</a>.
 Once SITL is built, the running and driving parts of this lab are
 exactly the same.</p>
 <h3 id="already-on-linux">Already on Linux?</h3>
@@ -506,8 +391,8 @@ need WSL2 or an X server; you are ready for the next section. We tested
 on Ubuntu; other distributions work too but may need small
 adjustments.</p>
 <hr />
-<h2 id="build-sitl">3. Build SITL</h2>
-<p>Now you get ArduPilot’s source code and compile SITL from it. This is
+<h2 id="3-build-sitl">3. Build SITL</h2>
+<p>Now you get ArduPilot&#39;s source code and compile SITL from it. This is
 the longest part of the setup. The download is around 2 GB and the build
 works your processor hard for several minutes, so before you start:
 <strong>plug your laptop into power</strong> and stop it from going to
@@ -537,14 +422,14 @@ tested, stable release instead.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> describe <span class="at">--tags</span></span></code></pre></div>
 <p>This shows where you are. On <code>master</code> it prints a long
 string like <code>ArduPilot-4.6.0-beta1-7164-gc3a03439be</code>, which
-just means “far ahead of the last release.” Now switch to the stable
+just means &quot;far ahead of the last release.&quot; Now switch to the stable
 Rover release and re-sync the sub-libraries:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout Rover-4.6.3</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> submodule update <span class="at">--init</span> <span class="at">--recursive</span></span></code></pre></div>
 <p><code>Rover-4.6.3</code> was the latest stable version as of
 mid-2026; to check whether a newer one exists, run
 <code>git tag -l &#39;Rover-4.*&#39; | sort -V | tail</code>. After the
-checkout, git warns that you are in a “detached HEAD” state: that is
+checkout, git warns that you are in a &quot;detached HEAD&quot; state: that is
 normal and just means you are sitting exactly on a release rather than
 on a branch.</p>
 <p>The second command is important. Switching the main code does not
@@ -556,7 +441,7 @@ strange build errors later.</p>
 <p>You should now see a short tag rather than the long development
 string. Do not be thrown if it reads
 <strong><code>APMrover2-stable</code></strong> instead of
-<code>Rover-4.6.3</code>: ArduPilot keeps a moving “stable” tag that
+<code>Rover-4.6.3</code>: ArduPilot keeps a moving &quot;stable&quot; tag that
 sits on the very same commit, and git just happens to report that name.
 You are on the right code either way.</p>
 <h3 id="install-the-prerequisites">Install the prerequisites</h3>
@@ -566,16 +451,16 @@ shell settings so the new tools are available:</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="ex">Tools/environment_install/install-prereqs-ubuntu.sh</span> <span class="at">-y</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="bu">source</span> ~/.profile</span></code></pre></div>
 <p>This is the step that takes a while and works the computer hardest.
-The <code>-y</code> answers “yes” to its prompts. (It also installs a
+The <code>-y</code> answers &quot;yes&quot; to its prompts. (It also installs a
 toolchain for building real flight-controller hardware, which SITL does
 not need but which does no harm.)</p>
 <blockquote>
 <p><strong>Only on very recent Linux (Ubuntu 25.04 or newer, including
 26.04):</strong> the script bundled with the 4.6.x release does not
 recognise these brand-new Ubuntu versions and fails, with errors like
-<code>Unable to locate package python-argparse</code> or a “PEP 668
-externally-managed-environment” pip error. If that happens, replace just
-that one script with the up-to-date version from ArduPilot’s development
+<code>Unable to locate package python-argparse</code> or a &quot;PEP 668
+externally-managed-environment&quot; pip error. If that happens, replace just
+that one script with the up-to-date version from ArduPilot&#39;s development
 branch, then re-run the two commands above:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="fu">git</span> checkout origin/master <span class="at">--</span> Tools/environment_install/install-prereqs-ubuntu.sh</span></code></pre></div>
 <p><strong>Windows students will not hit this.</strong> The command
@@ -585,19 +470,24 @@ This only affects very recent native-Linux installs.</p>
 <p>When it finishes, your terminal prompt should start with
 <code>(venv-ardupilot)</code>. That is a Python virtual environment (an
 isolated set of Python tools) the script created for ArduPilot, and
-SITL’s launch command and its Python libraries live inside it. The
+SITL&#39;s launch command and its Python libraries live inside it. The
 script also arranges for this environment to activate automatically each
 time you open a new Ubuntu terminal, so normally you do not have to
 think about it: if the prompt starts with <code>(venv-ardupilot)</code>,
 you are ready.</p>
 <p>If you ever open a terminal where that prefix is missing, or a later
-command such as <code>sim_vehicle.py</code> comes back as “command not
-found”, it just means the environment was not loaded. The simplest fix
+command such as <code>sim_vehicle.py</code> comes back as &quot;command not
+found&quot;, it just means the environment was not loaded. The simplest fix
 is to close that terminal and open a fresh one; if you would rather
 reload it in place, run <code>source ~/.profile</code>. And if you ever
 want to step out of the environment on purpose, type
 <code>deactivate</code>.</p>
 <h3 id="compile-sitl">Compile SITL</h3>
+<p>Run these from inside <code>~/ardupilot</code> (the folder you cloned
+into), with the <code>(venv-ardupilot)</code> prefix showing. If you
+opened a new terminal since the prereq step, the prefix comes back on
+its own, but new terminals start in your home folder, so
+<code>cd ~/ardupilot</code> first.</p>
 <p>Two commands: the first sets up the build for the simulator, the
 second compiles the Rover code.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="ex">./waf</span> configure <span class="at">--board</span> sitl</span>
@@ -611,10 +501,6 @@ them be and watch the <code>[ n/1299 ]</code> counter climb. The
 finished simulator lands at <code>build/sitl/bin/ardurover</code>.</p>
 <h3 id="quick-check-did-it-work">Quick check: did it work?</h3>
 <table>
-<colgroup>
-<col style="width: 50%" />
-<col style="width: 50%" />
-</colgroup>
 <thead>
 <tr>
 <th>After running</th>
@@ -641,7 +527,7 @@ finished simulator lands at <code>build/sitl/bin/ardurover</code>.</p>
 <p>With the build finished and the environment loaded, you are ready to
 start the simulator for the first time.</p>
 <hr />
-<h2 id="running-sitl-for-the-first-time">4. Running SITL for the first
+<h2 id="4-running-sitl-for-the-first-time">4. Running SITL for the first
 time</h2>
 <p>Once the build has finished, you are almost ready to start the
 simulator. First we set up two things the launch command needs, a
@@ -664,9 +550,9 @@ sets the simulated battery to a large 30,000 mAh. We are not testing
 battery life in the simulator, so we make it deliberately large: the
 battery then stays comfortably full through a long run, instead of
 draining down and nagging you with low-battery warnings part way through
-a mission. (A “parameter” is just one of ArduPilot’s many settings; this
+a mission. (A &quot;parameter&quot; is just one of ArduPilot&#39;s many settings; this
 file holds the few we want to change, and the launch command loads them
-on top of Rover’s defaults.) In nano, save and exit with Ctrl-O, Enter,
+on top of Rover&#39;s defaults.) In nano, save and exit with Ctrl-O, Enter,
 then Ctrl-X.</p>
 <p><strong>Starting location.</strong> ArduPilot keeps a list of named
 places in a file called <code>locations.txt</code>. Open it and add our
@@ -715,7 +601,11 @@ instead of scattering it through the ArduPilot source code.</p>
 built already, so it can take a while. After that it starts quickly. You
 may see some red text scroll past as it comes up; the troubleshooting
 section covers which of those messages are harmless. When it is ready,
-two windows open: a map, and a console showing the boat’s status.</p>
+two windows open: a map, and a console showing the boat&#39;s status.</p>
+<p>The map downloads its satellite imagery online as you look around. If
+a few tiles read &quot;unavailable&quot; at first, zoom out a little or pan the
+map and they fill in. That is just the imagery service catching up, not
+a problem with the boat or your setup.</p>
 <h3 id="what-each-part-of-the-command-does">What each part of the
 command does</h3>
 <p><strong><code>sim_vehicle.py</code></strong>: the script that starts
@@ -731,7 +621,7 @@ ArduPilot comes in several versions, one each for multirotors (Copter),
 planes (Plane), underwater vehicles (Sub), and ground vehicles and boats
 (Rover). <code>Rover</code> is the one we want, and this flag is what
 makes the simulator build and run the <code>ardurover</code> program and
-load Rover’s baseline settings.</p>
+load Rover&#39;s baseline settings.</p>
 <p>If you leave <code>-v</code> out, the script tries to guess the
 vehicle from the name of the folder you are standing in. That is why
 some older instructions had you move into the <code>Rover</code> source
@@ -745,27 +635,27 @@ ArduPilot keeps a list of named places with their coordinates, and
 sensitive, so <code>-L syros</code> in lower case will not be found. The
 boat appears at this spot on the map when the simulator starts.</p>
 <p><strong><code>--out=udp:127.0.0.1:14550</code></strong>: sends a copy
-of the boat’s live data to a ground station on this same computer
-(<code>127.0.0.1</code> means “this same computer”). MAVProxy’s own map
-and console do not need it, but Lab04’s Python reads the boat here, so
+of the boat&#39;s live data to a ground station on this same computer
+(<code>127.0.0.1</code> means &quot;this same computer&quot;). MAVProxy&#39;s own map
+and console do not need it, but Lab04&#39;s Python reads the boat here, so
 we include it from the start. How other ground stations like Mission
 Planner connect, including the WSL case, is covered just below.</p>
 <p><strong><code>--add-param-file=$HOME/maritime26/custom-parms/boat.parm</code></strong>:
-loads an extra settings file <em>on top of Rover’s defaults</em>. This
+loads an extra settings file <em>on top of Rover&#39;s defaults</em>. This
 is where the boat specific settings live, such as the one that tells
 Rover to behave as a boat (<code>FRAME_CLASS=2</code>). Use
 <code>$HOME</code> here rather than the <code>~</code> shortcut. The
 <code>~</code> is not expanded inside this option and would give you a
-“file not found” error, while <code>$HOME</code> works.</p>
+&quot;file not found&quot; error, while <code>$HOME</code> works.</p>
 <p><strong><code>--map</code></strong>: opens a map window showing the
-boat’s position, the path it has travelled, and any waypoints (points
+boat&#39;s position, the path it has travelled, and any waypoints (points
 along a planned route). You can also right click on the map to send the
 boat somewhere, which we use in the next section.</p>
 <p><strong><code>--console</code></strong>: opens a separate status
-window showing the boat’s mode, whether it is armed (ready to move), its
+window showing the boat&#39;s mode, whether it is armed (ready to move), its
 GPS fix, its battery, and a running list of messages. You still get a
 text command prompt in the terminal you launched from either way; this
-window just adds a cleaner view of the boat’s state next to it.</p>
+window just adds a cleaner view of the boat&#39;s state next to it.</p>
 <h3 id="watching-and-commanding-the-boat-from-a-ground-station">Watching
 and commanding the boat from a ground station</h3>
 <p>The map and console that MAVProxy gives you are enough for everything
@@ -780,12 +670,12 @@ for ArduPilot.</li>
 supports Rover.</li>
 </ul>
 <p><strong>How the boat reaches a ground station.</strong> A ground
-station listens on port <code>14550</code>, and SITL sends the boat’s
+station listens on port <code>14550</code>, and SITL sends the boat&#39;s
 live data out to that port. The only question is <em>which computer</em>
 it sends to, and SITL handles most of this for you:</p>
 <ul>
 <li><strong>On native Linux</strong>, it sends to
-<code>127.0.0.1</code>, which just means “this same computer”, so
+<code>127.0.0.1</code>, which just means &quot;this same computer&quot;, so
 QGroundControl on the same machine finds the boat on its own.</li>
 <li><strong>Inside WSL</strong>, it detects WSL and automatically sends
 the data across to the Windows side as well, so once you set Mission
@@ -794,13 +684,13 @@ no Windows address to look up. This works as long as WSL is in its
 normal networking mode.</li>
 </ul>
 <p>The <code>--out=udp:127.0.0.1:14550</code> we put in the launch
-command adds one more copy, sent to “this same computer”. That is the
-copy Lab04’s Python reads, since your Python runs inside WSL next to the
+command adds one more copy, sent to &quot;this same computer&quot;. That is the
+copy Lab04&#39;s Python reads, since your Python runs inside WSL next to the
 simulator, so it does no harm to keep it in from the start.</p>
 <p>Connecting Mission Planner step by step, and what to do if it does
 not find the boat on its own, is covered in section 7.</p>
 <hr />
-<h2 id="driving-it-modes-console">5. Driving it: modes + console</h2>
+<h2 id="5-driving-it-modes--console">5. Driving it: modes + console</h2>
 <p>You have already driven the real boat by hand: the joystick paired to
 its receiver, the thrusters turning, maybe a first run in the pool. SITL
 is the same idea on screen. It lets you rehearse how the boat behaves
@@ -836,7 +726,7 @@ arm throttle</code></pre>
 settle, then try <code>arm throttle</code> again.</p>
 <p>Now right-click on the map at a spot near the boat and choose
 <strong>Fly to</strong>. It will ask for an altitude; type
-<code>0.1</code> and press Enter. (The “Fly to” wording and the altitude
+<code>0.1</code> and press Enter. (The &quot;Fly to&quot; wording and the altitude
 question are there because the same map is also used for flying drones.
 A boat ignores altitude, but typing <code>0.1</code> keeps it the same
 as the starting height we set for the location, which avoids
@@ -853,17 +743,19 @@ refused because the boat is still moving, wait until it has settled,
 then try again.</p>
 <p>That is the whole loop you will repeat through the lab: pick a mode,
 arm, command the boat, watch it on the map, return and disarm.</p>
+<p>To read the boat&#39;s live numbers at any time, type
+<code>status VFR_HUD</code> in the console. On a boat, watch
+<strong>groundspeed</strong> for speed, <strong>heading</strong> for
+direction, and <strong>throttle</strong> for motor effort; the
+<strong>airspeed</strong> field just mirrors groundspeed (a boat has no
+airspeed sensor), and <strong>alt</strong> and <strong>climb</strong>
+stay near zero on the surface.</p>
 <h3 id="the-modes-you-will-use">The modes you will use</h3>
 <p>ArduPilot has many modes; you only need a handful here. The
 boat-specific behaviour below depends on one setting we already loaded,
 <code>FRAME_CLASS=2</code>, which tells ArduPilot it is driving a boat
 rather than a land vehicle.</p>
 <table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
 <thead>
 <tr>
 <th>Mode</th>
@@ -940,8 +832,8 @@ boat on its spot, so it stays where you left it even in a current. To
 hold position on the water, use LOITER, not HOLD.</p>
 <p><strong>RTL</strong> brings the boat back to where it started. A land
 rover would simply stop there, but a boat would drift, so instead it
-holds or circles around the launch point to stay put. This “keep your
-position after you arrive” behaviour is automatic once the vehicle is
+holds or circles around the launch point to stay put. This &quot;keep your
+position after you arrive&quot; behaviour is automatic once the vehicle is
 set up as a boat, and it applies in AUTO, GUIDED, and Smart RTL as well
 (see the ArduPilot <a href="https://ardupilot.org/rover/docs/rtl-mode.html">RTL mode</a> and
 <a href="https://ardupilot.org/rover/docs/loiter-mode.html">Loiter
@@ -960,11 +852,11 @@ joystick to a ground station on the PC is something we can experiment
 with, but it is not part of the lab.)</p>
 <h3 id="check-it-is-working">Check it is working</h3>
 <p>Two quick checks confirm the setup is sound, which matters because
-Lab04’s Python will rely on both.</p>
+Lab04&#39;s Python will rely on both.</p>
 <p>Confirm the data link Python will use is open:</p>
 <pre><code>output list</code></pre>
 <p>This should list <code>127.0.0.1:14550</code>, the address we send
-the boat’s data to in the launch command. On WSL you will also see a
+the boat&#39;s data to in the launch command. On WSL you will also see a
 second line for your Windows host; that is SITL forwarding the data
 across to Windows, and it is normal.</p>
 <p>Confirm the boat settings loaded:</p>
@@ -978,8 +870,8 @@ can check any other parameter the same way.</p>
 send it, and shows these settings, your simulation environment is fully
 installed and ready for the rest of the lab.</p>
 <hr />
-<h2 id="environment-params-meltemi-winds">6. Environment params (Meltemi
-winds)</h2>
+<h2 id="6-environment-params-meltemi-winds">6. Environment params
+(Meltemi winds)</h2>
 <p>In section 5 the water was calm: the boat went exactly where you
 pointed it. Real sea trials will not be so kind. Around Syros and the
 rest of the Cyclades, summer brings the <strong>Meltemi</strong>, a
@@ -1051,7 +943,7 @@ weather, a good test of whether the boat can reliably return.</li>
 the Cyclades, and it is a safe place to learn how each mode copes before
 a real sea trial.</p>
 <hr />
-<h2 id="missions-auto-mode">7. Missions / AUTO mode</h2>
+<h2 id="7-missions--auto-mode">7. Missions / AUTO mode</h2>
 <p>So far you have driven the boat one move at a time: in GUIDED you
 pointed at a spot and it went there, and you did the same by hand on the
 real boat. A mission is the next step up. Instead of commanding one
@@ -1085,13 +977,13 @@ or tabs, so an ordinary copy and paste is fine.</p>
 (<code>~/maritime26/sitl-test</code>), then load the mission in the
 console:</p>
 <pre><code>wp load ../missions/simple_nisaki.txt</code></pre>
-<p><code>wp</code> is the console’s mission command, and
+<p><code>wp</code> is the console&#39;s mission command, and
 <code>wp load</code> reads a mission from a file. The
 <code>../missions/</code> part is a relative path: you launched from
 <code>sitl-test</code>, so <code>..</code> steps up one level to
 <code>maritime26</code>, then down into <code>missions</code>. We keep
 mission files in their own folder, separate from the run folder, so the
-run folder’s throwaway files do not mix with routes you want to
+run folder&#39;s throwaway files do not mix with routes you want to
 keep.</p>
 <p>Check it loaded:</p>
 <pre><code>wp list</code></pre>
@@ -1144,16 +1036,11 @@ worth a quick look so you are not copying numbers blindly. Open
 <code>simple_nisaki.txt</code> in a text editor. The first line is
 always:</p>
 <pre><code>QGC WPL 110</code></pre>
-<p>This is a label that says “this is a QGroundControl waypoint list,
-file format version 110.” It has to be the first line. After it, each
+<p>This is a label that says &quot;this is a QGroundControl waypoint list,
+file format version 110.&quot; It has to be the first line. After it, each
 line is one point in the route, written as 12 values separated by tabs,
 always in the same order:</p>
 <table>
-<colgroup>
-<col style="width: 33%" />
-<col style="width: 33%" />
-<col style="width: 33%" />
-</colgroup>
 <thead>
 <tr>
 <th>Column</th>
@@ -1180,7 +1067,7 @@ always in the same order:</p>
 <tr>
 <td>4</td>
 <td>Command</td>
-<td>What to do here: 16 means “go to this point”</td>
+<td>What to do here: 16 means &quot;go to this point&quot;</td>
 </tr>
 <tr>
 <td>5</td>
@@ -1218,7 +1105,7 @@ always in the same order:</p>
 these by hand. A ground station writes the file for you when you click
 points on a map (more on that just below); we show the format so you can
 read a mission file and make small edits with confidence. For a simple
-“visit these points” route like ours, the only columns you would ever
+&quot;visit these points&quot; route like ours, the only columns you would ever
 change are the command (16), the latitude, and the longitude, with hold
 time and autocontinue as occasional extras. Everything else stays as you
 see it.</p>
@@ -1226,13 +1113,13 @@ see it.</p>
 autopilot ignores its coordinates and uses your real launch position
 instead, so its latitude and longitude are only a placeholder. And the
 altitude column is 0 on every line: a boat drives on the surface, so
-height does not apply, and 0 here means “the same level as home.”</p>
+height does not apply, and 0 here means &quot;the same level as home.&quot;</p>
 <p>If you want the full detail, these are the authoritative
 references:</p>
 <ul>
-<li>Mission file format: <a href="https://mavlink.io/en/file_formats/" class="uri">https://mavlink.io/en/file_formats/</a></li>
+<li>Mission file format: <a href="https://mavlink.io/en/file_formats/">https://mavlink.io/en/file_formats/</a></li>
 <li>The complete list of mission commands, and what each column means
-for Rover: <a href="https://ardupilot.org/rover/docs/common-mavlink-mission-command-messages-mav_cmd.html" class="uri">https://ardupilot.org/rover/docs/common-mavlink-mission-command-messages-mav_cmd.html</a></li>
+for Rover: <a href="https://ardupilot.org/rover/docs/common-mavlink-mission-command-messages-mav_cmd.html">https://ardupilot.org/rover/docs/common-mavlink-mission-command-messages-mav_cmd.html</a></li>
 </ul>
 <h3 id="build-your-own-mission-in-mission-planner">Build your own
 mission in Mission Planner</h3>
@@ -1242,31 +1129,56 @@ that is to draw it on a map. We use <strong>Mission Planner</strong> for
 this, the Windows ground station you met in Labs 01 and 02. It is also
 the tool you will use to plan missions on the real boats, so the
 practice here carries straight over.</p>
+<p><strong>Installing it.</strong> When you install Mission Planner it
+asks permission to install some device drivers; allow this, it is safe
+and expected (those drivers let it talk to real autopilots over USB).
+The first time you open it, it may also offer aviation extras like an
+<strong>Altitude Angel</strong> airspace and air-traffic service, or a
+<strong>Remote ID / Drone ID</strong> plugin (a regulatory &quot;license
+plate&quot; broadcast for real drones). We only use Mission Planner with
+simulated boats, so you can skip or disable both; <code>Ctrl-P</code>
+manages plugins.</p>
 <p><strong>Connect Mission Planner to the simulator.</strong> The boat
 runs inside WSL (Linux) and Mission Planner runs on Windows, so the two
-need a network link. The simulator already sends its data to port 14550;
-the only question is whether that reaches Windows.</p>
+need a network link. For a single boat this is almost automatic: as you
+saw in section 4, the simulator detects WSL and forwards the boat&#39;s data
+across to Windows for you, so there is no address to look up. You just
+point Mission Planner at it.</p>
+<ol type="1">
+<li>Open Mission Planner.</li>
+<li>Set the connection box at the top right to <strong>UDP</strong>,
+click <strong>Connect</strong>, and accept port
+<strong>14550</strong>.</li>
+<li>The first time, Windows Firewall asks whether to let Mission Planner
+use your networks. Allow it, and tick <strong>both Private and
+Public</strong>. The boat&#39;s data arrives from WSL over a virtual network
+adapter that Windows may treat as either kind, so allowing only one can
+silently block it.</li>
+</ol>
+<p>The parameters load and the boat appears on the map. (Mirrored
+networking is the same: connect on UDP 14550.)</p>
+<p><strong>If the boat does not appear:</strong></p>
 <ul>
-<li><p>If your WSL uses <strong>mirrored networking</strong>, Windows
-and Linux share the same localhost, so Mission Planner finds the boat on
-its own. Open it, and the boat appears; skip ahead to drawing.</p></li>
-<li><p>On a <strong>default WSL setup</strong>, the boat’s data has to
-be aimed at your Windows machine by address. Find that address from the
-Ubuntu terminal:</p>
-<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> route show <span class="kw">|</span> <span class="fu">grep</span> <span class="at">-i</span> default <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{print $3}&#39;</span></span></code></pre></div>
-<p>Then change the <code>--out</code> part of your launch command to
-send to that address instead of <code>127.0.0.1</code>:</p>
-<pre><code>--out=udp:&lt;that-address&gt;:14550</code></pre>
-<p>In Mission Planner, set the connection box at the top right to
-<strong>UDP</strong>, click <strong>Connect</strong>, and accept port
-<strong>14550</strong>. If Windows asks, allow Mission Planner through
-the firewall. The parameters load and the boat appears on the
-map.</p></li>
+<li>Check the firewall first, it is the usual culprit: Control Panel →
+Windows Defender Firewall → <strong>Allow an app through
+firewall</strong> → find <strong>Mission Planner</strong> and make sure
+both <strong>Private</strong> and <strong>Public</strong> are
+ticked.</li>
+<li>Make sure the connection really is <strong>UDP</strong> on port
+<strong>14550</strong>, not a serial or TCP option.</li>
+<li>As a last resort, send the data to Windows by hand. Find your
+Windows address in the Ubuntu terminal:
+<div class="sourceCode" id="cb32"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> route show default <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{print $3}&#39;</span></span></code></pre></div>
+Then, at the simulator&#39;s console prompt, add it as an extra output (no
+restart needed):
+<pre><code>output add &lt;that-address&gt;:14550</code></pre>
+This keeps the <code>--out=udp:127.0.0.1:14550</code> copy that Lab04
+reads, and adds the path to Windows alongside it.</li>
 </ul>
 <p><strong>Draw the route.</strong> Click the <strong>PLAN</strong> tab.
 Left-click on the water to drop waypoints one after another; each
 appears as a numbered marker and as a row in the table below. The
-table’s altitude defaults to 100 and the frame to Relative; a boat
+table&#39;s altitude defaults to 100 and the frame to Relative; a boat
 ignores altitude, so leave both as they are. To finish with the boat
 returning home, right-click the map and choose <strong>RTL</strong>,
 which adds a return-to-launch as the final step. When the route looks
@@ -1282,19 +1194,19 @@ Mission</strong> runs the route again from the start.</p>
 <p><strong>Use one tool at a time.</strong> Mission Planner and the
 console window are two separate ground stations. Each keeps its own copy
 of the mission, and they only match up when you push or pull:
-<strong>Write</strong> sends Mission Planner’s mission to the boat, and
-<strong>Read</strong> pulls the boat’s mission back into Mission
+<strong>Write</strong> sends Mission Planner&#39;s mission to the boat, and
+<strong>Read</strong> pulls the boat&#39;s mission back into Mission
 Planner. So do not plan in one and check in the other. If you build a
 mission in Mission Planner, run the whole loop there. As an example of
 the trap: clearing the mission with <code>wp clear</code> in the console
-does not update Mission Planner’s map until you press
+does not update Mission Planner&#39;s map until you press
 <strong>Read</strong>. To clear a mission inside Mission Planner,
 right-click the map and choose <strong>Clear Mission</strong>.</p>
 <p>You can also draw a mission in the console itself, by right-clicking
 its map and choosing Mission then Draw, but it is fiddlier and the
 points only reach the boat after a final click, so for building missions
 we recommend Mission Planner. On native Linux or macOS, where Mission
-Planner is not available, QGroundControl’s Plan view builds and runs
+Planner is not available, QGroundControl&#39;s Plan view builds and runs
 missions in the same way.</p>
 <h3 id="run-a-mission-in-the-wind">Run a mission in the wind</h3>
 <p>Everything above ran in calm water. You can put a mission through the
@@ -1311,7 +1223,7 @@ in the console, is exactly what Lab04 is about. The route you just ran
 by hand is the same thing your companion-computer code will build and
 command there.</p>
 <hr />
-<h2 id="multi-vehicle-sitl">8. Multi-vehicle SITL</h2>
+<h2 id="8-multi-vehicle-sitl">8. Multi-vehicle SITL</h2>
 <p>The companion-computer projects in Lab04 coordinate several boats at
 once: keeping formation, follow-the-leader, splitting an area to survey
 it faster. To rehearse that here we run two or three SITL boats at the
@@ -1326,66 +1238,333 @@ again:</p>
 <pre><code>Syros2=37.439142,24.945389,0.1,180
 Syros3=37.438962,24.945162,0.1,180
 Syros4=37.438782,24.944935,0.1,180</code></pre>
-<!-- TO DRAFT. Verified hands-on on minis 2026-06-20 (Rover-4.6.0, mirrored WSL2):
-
-  APPROACH (decided): one sim_vehicle.py instance per boat, separate terminals. NOT the
-  --count/--auto-sysid swarm (researched; rejected because each Lab04 Python script needs its
-  boat on its own UDP port, which separate instances give for free).
-    Boat 1: sim_vehicle.py -v Rover -I 0 --sysid 1 -L Syros  ... --out=udp:127.0.0.1:14550
-    Boat 2: sim_vehicle.py -v Rover -I 1 --sysid 2 -L Syros2 ... --out=udp:127.0.0.1:14560 --out=udp:127.0.0.1:14550
-    Boat 3: -I 2 --sysid 3 -L Syros3 ... (14570 + shared)
-  Each boat in its OWN run folder (~/maritime26/sitl-test, sitl-test2, ...) so eeprom/logs don't clash.
-
-  SYSIDS (the crux): -I N does NOT auto-assign the system id (confirmed, GitHub #8349 — auto-set was
-  reverted). Must pass --sysid N explicitly; it sets SYSID_THISMAV (param name on 4.6.0 is
-  SYSID_THISMAV, NOT MAV_SYSID — that rename is post-4.6.0). Verified: boat1=1, boat2=2 via param show SYSID*.
-  One MP separates boats by sysid. Ports confirmed: instance N -> TCP 5760+10N, UDP out 14550+10N.
-
-  THE OLD BUG (Doc §5.4, user's own forum thread): it was MAVProxy's `output sysid <id> <ip:port>`
-  FILTERED output that broke (main MAVProxy "link down", loss of control). Maintainer stephendade
-  replicated it, PR #1443 "Fix Sysid filtered output", Yuri_Rage 2024-09-15 said it still didn't work.
-  -> §8 must say: do NOT use `output sysid` routing. Plain duplicate --out to a shared MP port is the
-  robust path and was never the buggy bit.
-
-  PORT-SCHEME DECISION (Option A vs B) DEFERRED to the Lab04 pass — decide with the Python connection
-  strings in front of us. A = keep last year (boat ports 14550/14560, boat1 port doubles as MP port);
-  B = reserve 14550 for MP only, give each boat its own 14551/14552 (symmetric, no double-duty, but
-  changes Lab04 constants). Requirement that drives it: MP must SEE boats while Python DRIVES them
-  (MAVProxy fans one boat out to all its --out ports, so MP-port + Python-port each get a copy).
-
-  WSLg / MAP CAVEAT (big): MAVProxy --map is fragile multi-instance on minis's WSLg — froze hard on a
-  right-click (popup pointer-grab), two map windows made it worse, and the dead frames had to be killed
-  via the Windows "Remote Desktop" host in Task Manager (WSLg renders Linux GUIs over RDP). Killing it
-  also tore down the display pipe so --map/--console then wouldn't spawn at all.
-  -> For multi-vehicle run HEADLESS: NO --map, NO --console. MAVProxy runs in the launching terminal;
-  ONE Mission Planner (native Windows, UDP listen 14550, WSLg-independent) is the only visual.
-  -> Open: does --map work for a SINGLE instance this year? (isolation test was blocked by the wedged
-  display). Matters for §5/§7 which assume the MAVProxy map works. Retest on a fresh WSLg (wsl --shutdown).
-
-  NOT YET CONFIRMED (carry forward): MP reliably seeing BOTH boats at once on the shared 14550 port.
-  It worked early in the session (dropdown showed UDP14550-1 AND -2), then after the freeze/Task-Mgr-kill
-  only showed one (the headless boat 2). Likely a half-broken-state artifact, OR the shared-port MP
-  listener latching onto one sender (which would push us to per-boat MP ports + MP "Add Link" per boat).
-  Also never got to confirm a boat DRIVES headless (wp load simple_nisaki.txt -> mode auto -> arm throttle,
-  watch on MP). Both go first next session from a CLEAN start: kill all, launch both headless, then MP.
-
-  CONTROL FROM MP: a single shared-port MP could not Fly-To a specific boat (command return-path
-  ambiguity over one UDP socket). Fine for the lab: Lab04 controls via Python (each script targets its
-  boat's own port). MP stays the VIEWER. If MP piloting of a specific boat is wanted, use per-boat links.
-
-  Launch commands staged in ~/personal/cc-commands.txt (headless multi-vehicle relaunch + map isolation test).
--->
+<h3 id="starting-the-boats">Starting the boats</h3>
+<p>Each boat is a separate copy of the simulator, run from its own
+terminal and its own folder, just like the single boat in section 4 but
+with a few extra flags so the copies do not clash.</p>
+<p>You already made a <code>sitl-test</code> folder for the first boat.
+Make a second one for the second boat:</p>
+<div class="sourceCode" id="cb36"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/maritime26/sitl-test2</span></code></pre></div>
+<p>Each boat needs its own folder, because the simulator writes its
+memory file and logs into the folder it starts from, and two boats
+sharing one folder would overwrite each other&#39;s files.</p>
+<p>We also run the boats this time <strong>without</strong> the
+<code>--map</code> and <code>--console</code> windows. With several
+simulators going at once, MAVProxy&#39;s own map window can become unstable,
+and we do not need it here: Mission Planner will be our single window
+onto all the boats. You still get a text command prompt in each
+terminal, which is how you steer each boat.</p>
+<p><strong>Boat 1</strong>, in the first terminal, is just the section 4
+command with the two window flags removed:</p>
+<div class="sourceCode" id="cb37"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb37-1"><a href="#cb37-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/maritime26/sitl-test</span>
+<span id="cb37-2"><a href="#cb37-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sim_vehicle.py</span> <span class="at">-v</span> Rover <span class="at">-L</span> Syros <span class="dt">\</span></span>
+<span id="cb37-3"><a href="#cb37-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--add-param-file</span><span class="op">=</span><span class="va">$HOME</span>/maritime26/custom-parms/boat.parm <span class="dt">\</span></span>
+<span id="cb37-4"><a href="#cb37-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span><span class="op">=</span>udp:127.0.0.1:14550</span></code></pre></div>
+<p><strong>Boat 2</strong> needs four changes, which we explain here and
+then put together with the networking part in the next section:</p>
+<ul>
+<li><code>--instance 1</code>: run this as a second, separate simulator.
+Without it, the second boat would try to grab the same network ports as
+the first and fail to start. Each instance moves its ports up by ten, so
+instance 0 uses 14550, instance 1 uses 14560, and so on.</li>
+<li><code>--sysid 2</code>: give this boat the identity number 2. Every
+boat on the network needs a different system id so Mission Planner can
+tell them apart. The first boat is 1 by default; without a different id
+here, both boats would claim to be boat 1 and Mission Planner would
+merge them.</li>
+<li><code>-L Syros2</code>: start it at the second location you added,
+so it does not appear on top of boat 1.</li>
+<li>one extra <code>--out</code>: the line that actually gets boat 2
+into Mission Planner, covered next.</li>
+</ul>
+<h3 id="getting-every-boat-into-mission-planner">Getting every boat into
+Mission Planner</h3>
+<p>In section 4 you saw that inside WSL the simulator sends the first
+boat across to Windows by itself, so Mission Planner finds it on port
+14550 with no setup. It does the same for every extra boat, but with a
+catch: each instance is sent to its <em>own</em> port. Instance 0 goes
+to 14550, instance 1 to 14560, instance 2 to 14570, and so on. Mission
+Planner listens on only one port, 14550, so only the first boat lands
+there by itself. The others arrive on ports nothing is listening on.</p>
+<p>The fix is to send each extra boat a second time, explicitly, to
+Windows on port 14550, so it reaches Mission Planner alongside boat 1.
+That is the extra <code>--out</code> on boat 2.</p>
+<p>Which address you aim it at depends on your WSL networking:</p>
+<ul>
+<li><strong>Default (NAT) WSL2</strong>, what most students have: you
+need your Windows computer&#39;s address. Find it with
+<div class="sourceCode" id="cb38"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> route show default <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{print $3}&#39;</span></span></code></pre></div>
+It looks like <code>172.20.160.1</code>. (Do not use the address from
+<code>/etc/resolv.conf</code>; on recent WSL that is an internal DNS
+helper, not your Windows machine.)</li>
+<li><strong>Mirrored networking</strong>: Windows and WSL share the same
+localhost, so you can use <code>127.0.0.1</code> and skip the
+lookup.</li>
+</ul>
+<p>So boat 2&#39;s full launch, on a default WSL2 setup, is (put your own
+address in place of <code>172.20.160.1</code>):</p>
+<div class="sourceCode" id="cb39"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/maritime26/sitl-test2</span>
+<span id="cb39-2"><a href="#cb39-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sim_vehicle.py</span> <span class="at">-v</span> Rover <span class="at">--instance</span> 1 <span class="at">--sysid</span> 2 <span class="at">-L</span> Syros2 <span class="dt">\</span></span>
+<span id="cb39-3"><a href="#cb39-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--add-param-file</span><span class="op">=</span><span class="va">$HOME</span>/maritime26/custom-parms/boat.parm <span class="dt">\</span></span>
+<span id="cb39-4"><a href="#cb39-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span><span class="op">=</span>udp:127.0.0.1:14560 <span class="at">--out</span><span class="op">=</span>udp:172.20.160.1:14550</span></code></pre></div>
+<p>The first output, <code>127.0.0.1:14560</code>, keeps a copy on this
+computer for your Lab04 Python to read later. The second,
+<code>172.20.160.1:14550</code>, is the one aimed at Windows so Mission
+Planner sees the boat.</p>
+<p><strong>Check it before opening Mission Planner.</strong> In boat 2&#39;s
+terminal, type <code>output</code> at the prompt. Your Windows address
+on port 14550 should be in the list. If instead you see a line ending in
+<code>:14550</code> with no address in front, the address did not fill
+in; add it on the spot without restarting:</p>
+<pre><code>output add 172.20.160.1:14550</code></pre>
+<p><strong>Now connect Mission Planner, once.</strong> Set the
+connection to UDP, connect on port 14550, and both boats appear, listed
+by their system ids 1 and 2, with a selector to switch the view between
+them. You do not open a second connection: both boats share the one port
+and Mission Planner separates them by id.</p>
+<p>For a third boat, repeat the pattern with a new folder,
+<code>--instance 2</code>, <code>--sysid 3</code>,
+<code>-L Syros3</code>, and the same explicit
+<code>--out=udp:&lt;your-windows-address&gt;:14550</code>.</p>
+<h3 id="driving-the-boats">Driving the boats</h3>
+<p>Mission Planner here is a <strong>viewer</strong>: it shows you all
+the boats together. It is not a reliable way to <em>drive</em> one
+particular boat, because the boats share its single connection, so a
+command you mean for boat 2 can end up reaching boat 1 instead. To steer
+a specific boat, use that boat&#39;s own terminal.</p>
+<p>For example, to run a mission on boat 2, type these at boat 2&#39;s
+prompt (any mission file works; the one from section 7 is fine):</p>
+<pre><code>wp load ~/simple_nisaki.txt
+mode auto
+arm throttle</code></pre>
+<p>Boat 2 sets off through the waypoints while boat 1 stays where it is.
+That independence is the whole point: each boat is commanded on its own
+connection, which is exactly how the Lab04 Python projects drive several
+boats at once, each script talking to its own boat on its own port.</p>
+<p>One thing to avoid: MAVProxy has a form of output that filters by
+system id (<code>output sysid ...</code>). It has a long-standing bug
+that can cut off control of all the boats at once, so do not use it. The
+plain second <code>--out</code> we used above is the reliable way.</p>
 <hr />
-<h2 id="shutdown-troubleshooting">9. Shutdown + troubleshooting</h2>
-<p><em>(to draft — Doc §6 + doc-QA findings. Fold in the §2.8
-“Troubleshooting Common Issues” list, already mostly covered elsewhere:
-display errors → VcXsrv + DISPLAY on Windows 10 (see §2); permission
-errors → directory access + dialout group; build failures →
-prerequisites (see §3); network timeouts → internet for downloads. Plus
-the doc-QA blocks: §2.6.1 OpenCV/NumPy as conditional, SRTM benign note,
-Ctrl-C shutdown.)</em></p>
+<h2 id="9-shutdown-and-troubleshooting">9. Shutdown and
+troubleshooting</h2>
+<p>Most of what looks like an error in SITL is not one. This section
+sorts the harmless noise from the real problems and points you to the
+fix for each, and it covers how to stop the simulator cleanly.</p>
+<h3 id="stopping-the-simulator">Stopping the simulator</h3>
+<p>To stop SITL, press Ctrl-C in the terminal where you launched it.
+That shuts the simulator down. You may see a short red error traceback
+as it exits; that is harmless, just the program tearing itself down.</p>
+<p>If you are running several boats (section 8), stop each one in its
+own terminal the same way. If a later launch complains that an address
+or port is already in use, a simulator process is still running in the
+background; clear any leftovers with:</p>
+<div class="sourceCode" id="cb42"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pkill</span> <span class="at">-f</span> ardurover</span></code></pre></div>
+<h3 id="messages-you-can-safely-ignore">Messages you can safely
+ignore</h3>
+<p>A running simulator prints a lot of text, and some of it looks
+alarming without being a problem. The common harmless ones:</p>
+<ul>
+<li><code>Failed to download /SRTM3/filelist_python ...</code> at
+startup. The simulator is trying to fetch terrain elevation data (SRTM
+is a global map of ground heights). Our boat is on the sea, where ground
+height does not matter, so this is safe to ignore.</li>
+<li><code>Field Elevation Set: 0m</code> printed over and over, about
+once a second, while the boat is disarmed. This is the firmware quirk
+from section 4. Seeing it once at startup is normal. If it keeps
+repeating, your starting location&#39;s altitude is set to <code>0</code>;
+change it to <code>0.1</code> (see section 4) and it stops.</li>
+<li>A short red error traceback when you stop the simulator with Ctrl-C.
+That is just the program shutting down, and is safe to ignore.</li>
+<li>Red text scrolling past during the first launch or a build. Warnings
+are not errors. As long as the simulator comes up, or the build ends
+with <code>finished successfully</code>, you are fine.</li>
+</ul>
+<h3 id="when-something-is-actually-wrong">When something is actually
+wrong</h3>
+<table>
+<thead>
+<tr>
+<th>Symptom</th>
+<th>What is happening</th>
+<th>What to do</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>The map and console windows never open (and the <code>xeyes</code>
+test did not work either)</td>
+<td>Your system cannot display Linux graphical apps yet</td>
+<td>Set up the display first; see section 2 (the <code>xeyes</code>
+test, and VcXsrv on Windows 10)</td>
+</tr>
+<tr>
+<td>The map window opens, then crashes with an error mentioning
+<code>cv2</code> or <code>numpy</code></td>
+<td>OpenCV and NumPy are out of step, on some older setups only</td>
+<td>See &quot;If the map will not open&quot; below</td>
+</tr>
+<tr>
+<td><code>arm throttle</code> is refused</td>
+<td>The autopilot&#39;s pre-arm safety checks have not passed yet, often the
+simulated GPS still settling</td>
+<td>Wait a few seconds and try again. In the simulator only, you can
+switch the checks off with <code>param set ARMING_CHECK 0</code> (never
+on a real boat). See section 5</td>
+</tr>
+<tr>
+<td>The boat never shows up in Mission Planner or QGroundControl</td>
+<td>The ground station is not receiving the boat&#39;s data</td>
+<td>Check the connection; see section 7: UDP on port 14550, the Windows
+host address on default WSL, and the firewall allowed on both Private
+and Public</td>
+</tr>
+<tr>
+<td><code>sim_vehicle.py: command not found</code>, or a Python module
+is reported missing, or the build failed</td>
+<td>The build environment is incomplete or not loaded</td>
+<td>Run <code>source ~/.profile</code>; your prompt should then show
+<code>(venv-ardupilot)</code>. If it still fails, re-run the
+prerequisites and rebuild; see section 3</td>
+</tr>
+<tr>
+<td>A launch complains an address or port is already in use</td>
+<td>An earlier simulator is still running</td>
+<td>Run <code>pkill -f ardurover</code> (see &quot;Stopping the simulator&quot;
+above)</td>
+</tr>
+<tr>
+<td>Downloads time out or crawl during install</td>
+<td>The clone, the prerequisites, and the map tiles all need
+internet</td>
+<td>Check your connection and retry. Map tiles that read &quot;unavailable&quot;
+fill in when you pan or zoom; see section 4</td>
+</tr>
+<tr>
+<td><code>Permission denied</code> when the simulator writes its
+files</td>
+<td>You are running from a folder you do not own</td>
+<td>Run from a folder under your home directory, such as
+<code>~/maritime26/sitl-test</code> as section 4 sets up</td>
+</tr>
+<tr>
+<td>The MAVProxy map window freezes, especially with several boats
+running</td>
+<td>A known fragility of the MAVProxy map on WSL&#39;s graphics, mostly with
+more than one simulator</td>
+<td>Run multi-vehicle headless, with one Mission Planner as the single
+viewer; see section 8. A single boat&#39;s map is fine</td>
+</tr>
+</tbody>
+</table>
+<h3 id="if-the-map-will-not-open-older-setups-only">If the map will not
+open (older setups only)</h3>
+<p>On some older setups the map window crashes on startup with an error
+mentioning OpenCV and NumPy. These are two helper libraries the map
+viewer uses, one for images (OpenCV, imported in Python as
+<code>cv2</code>) and one for maths (NumPy). The crash happens when the
+versions of the two are out of step with each other. On current setups
+this almost never happens, so do not touch anything unless you actually
+see it.</p>
+<p>If, and only if, your map fails to open and the error names
+<code>cv2</code> or <code>numpy</code>, pin them to a known-good
+pair:</p>
+<div class="sourceCode" id="cb43"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb43-1"><a href="#cb43-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pip</span> install opencv-python==4.9.0.80 numpy==1.26.4</span></code></pre></div>
+<p>If that command refuses to install, with pip saying there is no
+matching version, your Python is newer than those old releases support,
+which also means it is new enough not to need this fix. Leave the
+libraries alone; your map problem is something else, most likely the
+display setup in section 2.</p>
 <hr />
-<h2 id="command-quick-reference">10. Command quick reference</h2>
-<p><em>(to draft, new — student-facing command card)</em></p>
+<h2 id="10-command-quick-reference">10. Command quick reference</h2>
+<p>A one-page reminder of the commands from this lab; each block points
+back to the section with the full explanation. Everything in the console
+blocks is typed into the MAVProxy console, the text window you launched
+the simulator from.</p>
+<h3 id="start-the-simulator-section-4">Start the simulator (section
+4)</h3>
+<div class="sourceCode" id="cb44"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/maritime26/sitl-test</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sim_vehicle.py</span> <span class="at">-v</span> Rover <span class="at">-L</span> Syros <span class="at">--out</span><span class="op">=</span>udp:127.0.0.1:14550 <span class="dt">\</span></span>
+<span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--add-param-file</span><span class="op">=</span><span class="va">$HOME</span>/maritime26/custom-parms/boat.parm <span class="dt">\</span></span>
+<span id="cb44-4"><a href="#cb44-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--map</span> <span class="at">--console</span></span></code></pre></div>
+<p>To run it in the Meltemi weather (section 6), add a second parameter
+file to the command:</p>
+<div class="sourceCode" id="cb45"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>  <span class="ex">--add-param-file=</span><span class="va">$HOME</span><span class="ex">/maritime26/custom-parms/meltemi.parm</span></span></code></pre></div>
+<h3 id="drive-the-boat-from-the-console-section-5">Drive the boat from
+the console (section 5)</h3>
+<table>
+<thead>
+<tr>
+<th>Command</th>
+<th>What it does</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><code>arm throttle</code></td>
+<td>Allow the boat to move</td>
+</tr>
+<tr>
+<td><code>disarm</code></td>
+<td>Lock the motors, safe</td>
+</tr>
+<tr>
+<td><code>mode GUIDED</code></td>
+<td>Go where you point: right-click the map, choose <strong>Fly
+to</strong>, altitude <code>0.1</code></td>
+</tr>
+<tr>
+<td><code>mode RTL</code></td>
+<td>Return to the launch point</td>
+</tr>
+<tr>
+<td><code>mode AUTO</code></td>
+<td>Run the loaded mission</td>
+</tr>
+<tr>
+<td><code>mode LOITER</code></td>
+<td>Hold position against wind and current</td>
+</tr>
+<tr>
+<td><code>status VFR_HUD</code></td>
+<td>Show live numbers: read groundspeed, heading, throttle (airspeed
+mirrors groundspeed on a boat)</td>
+</tr>
+</tbody>
+</table>
+<h3 id="run-a-mission-section-7">Run a mission (section 7)</h3>
+<pre><code>wp load ../missions/simple_nisaki.txt   # load a route from a file
+wp list                                 # show the loaded route
+mode AUTO                               # then arm to set it off
+arm throttle
+wp clear                                # remove all waypoints</code></pre>
+<h3 id="quick-checks-section-5">Quick checks (section 5)</h3>
+<pre><code>output list               # data links; should include 127.0.0.1:14550
+param show FRAME_CLASS     # 2 means the boat settings loaded
+param set ARMING_CHECK 0   # turn off pre-arm checks: SIMULATOR ONLY</code></pre>
+<h3 id="stop-the-simulator-section-9">Stop the simulator (section
+9)</h3>
+<p>Press <strong>Ctrl-C</strong> in the terminal. If a leftover process
+then blocks the next launch:</p>
+<div class="sourceCode" id="cb48"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pkill</span> <span class="at">-f</span> ardurover</span></code></pre></div>
+<h3 id="connect-mission-planner-sections-4-and-7">Connect Mission
+Planner (sections 4 and 7)</h3>
+<p>Set the connection to <strong>UDP</strong>, port
+<strong>14550</strong>. On a default WSL setup, point the launch
+command&#39;s <code>--out</code> at your Windows address, found with:</p>
+<div class="sourceCode" id="cb49"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> route show default <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{print $3}&#39;</span>   <span class="co"># your Windows host address</span></span></code></pre></div>
+<h3 id="add-a-second-boat-section-8">Add a second boat (section 8)</h3>
+<div class="sourceCode" id="cb50"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/maritime26/sitl-test2</span>
+<span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sim_vehicle.py</span> <span class="at">-v</span> Rover <span class="at">--instance</span> 1 <span class="at">--sysid</span> 2 <span class="at">-L</span> Syros2 <span class="dt">\</span></span>
+<span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--add-param-file</span><span class="op">=</span><span class="va">$HOME</span>/maritime26/custom-parms/boat.parm <span class="dt">\</span></span>
+<span id="cb50-4"><a href="#cb50-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--out</span><span class="op">=</span>udp:127.0.0.1:14560 <span class="at">--out</span><span class="op">=</span>udp:<span class="op">&lt;</span>windows-address<span class="op">&gt;</span>:14550</span></code></pre></div>
+<p>A third boat repeats the pattern with
+<code>--instance 2 --sysid 3 -L Syros3</code>, ports going up by ten
+again.</p>
+<hr>
+<footer class="page-footer">
+<p>This page is auto-generated from the lab&#39;s source notes; last updated 2026-06-27.</p>
+<p>It is a tested and corrected rewrite of last year&#39;s notes. The original Google Doc is kept for reference: <a href="https://docs.google.com/document/d/13W_Bh-QBzk0Rt4U89Gn3XtNYC5CmAfB9JG77nX1cjEk/edit">Lab 03 notes (Google Doc)</a>.</p>
+</footer>
 </body>
 </html>
