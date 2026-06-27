@@ -130,19 +130,165 @@ color: #57606a;
 }
 hr { border: none; border-top: 1px solid #d0d7de; margin: 2em 0; }
 #TOC { background: #f6f8fa; border: 1px solid #e1e4e8; border-radius: 6px; padding: 0.6em 1.2em; }
+#TOC > h2 { margin: 0.2em 0 0.4em; font-size: 1.1rem; border: none; padding: 0; }
 #TOC ul { margin: 0.3em 0; }
+#TOC li { margin: 0.1em 0; }
+#TOC ul ul { font-size: 0.95em; }
+
+.back-to-top {
+position: fixed;
+bottom: 1.2rem;
+right: 1.2rem;
+z-index: 100;
+background: #0969da;
+color: #fff;
+text-decoration: none;
+padding: 0.45em 0.75em;
+border-radius: 6px;
+font-size: 0.85rem;
+box-shadow: 0 1px 4px rgba(0, 0, 0, 0.25);
+opacity: 0.85;
+}
+.back-to-top:hover { opacity: 1; color: #fff; }
 @media print {
 body { max-width: none; margin: 0; font-size: 11pt; }
 a { color: #000; }
 pre, table { page-break-inside: avoid; }
+.back-to-top { display: none; }
 }
 </style>
 </head>
 <body>
+<a id="top"></a>
 <header id="title-block-header">
 <h1 class="title">Lab 03: Software In The Loop (SITL) &amp; Auto
 Modes</h1>
 </header>
+<nav id="TOC" role="doc-toc">
+<h2 id="toc-title">On this page</h2>
+<ul>
+<li><a href="#1-what-sitl-is-and-what-this-lab-is-for" id="toc-1-what-sitl-is-and-what-this-lab-is-for">1. What SITL is, and
+what this lab is for</a>
+<ul>
+<li><a href="#one-autopilot-several-ways-to-command-it" id="toc-one-autopilot-several-ways-to-command-it">One autopilot, several
+ways to command it</a></li>
+<li><a href="#why-simulate-instead-of-just-using-the-boat" id="toc-why-simulate-instead-of-just-using-the-boat">Why simulate
+instead of just using the boat</a></li>
+<li><a href="#it-is-yours-to-keep" id="toc-it-is-yours-to-keep">It is
+yours to keep</a></li>
+<li><a href="#where-this-sits-in-the-bigger-picture" id="toc-where-this-sits-in-the-bigger-picture">Where this sits in the
+bigger picture</a></li>
+<li><a href="#what-sitl-does-not-do" id="toc-what-sitl-does-not-do">What
+SITL does not do</a></li>
+<li><a href="#what-you-will-do-in-this-lab" id="toc-what-you-will-do-in-this-lab">What you will do in this
+lab</a></li>
+</ul></li>
+<li><a href="#2-prerequisites--environment" id="toc-2-prerequisites--environment">2. Prerequisites / environment</a>
+<ul>
+<li><a href="#what-you-need" id="toc-what-you-need">What you
+need</a></li>
+<li><a href="#windows-install-ubuntu-with-wsl2" id="toc-windows-install-ubuntu-with-wsl2">Windows: install Ubuntu with
+WSL2</a></li>
+<li><a href="#check-that-graphical-apps-work" id="toc-check-that-graphical-apps-work">Check that graphical apps
+work</a></li>
+<li><a href="#if-the-xeyes-test-failed-add-an-x-server" id="toc-if-the-xeyes-test-failed-add-an-x-server">If the xeyes test
+failed: add an X server</a></li>
+<li><a href="#macos" id="toc-macos">macOS</a></li>
+<li><a href="#already-on-linux" id="toc-already-on-linux">Already on
+Linux?</a></li>
+</ul></li>
+<li><a href="#3-build-sitl" id="toc-3-build-sitl">3. Build SITL</a>
+<ul>
+<li><a href="#get-the-source-code" id="toc-get-the-source-code">Get the
+source code</a></li>
+<li><a href="#switch-to-a-stable-version" id="toc-switch-to-a-stable-version">Switch to a stable version</a></li>
+<li><a href="#install-the-prerequisites" id="toc-install-the-prerequisites">Install the prerequisites</a></li>
+<li><a href="#compile-sitl" id="toc-compile-sitl">Compile SITL</a></li>
+<li><a href="#quick-check-did-it-work" id="toc-quick-check-did-it-work">Quick check: did it work?</a></li>
+</ul></li>
+<li><a href="#4-running-sitl-for-the-first-time" id="toc-4-running-sitl-for-the-first-time">4. Running SITL for the first
+time</a>
+<ul>
+<li><a href="#set-the-boat-parameters-and-a-starting-location" id="toc-set-the-boat-parameters-and-a-starting-location">Set the boat
+parameters and a starting location</a></li>
+<li><a href="#a-folder-to-run-from" id="toc-a-folder-to-run-from">A
+folder to run from</a></li>
+<li><a href="#what-each-part-of-the-command-does" id="toc-what-each-part-of-the-command-does">What each part of the
+command does</a></li>
+<li><a href="#watching-and-commanding-the-boat-from-a-ground-station" id="toc-watching-and-commanding-the-boat-from-a-ground-station">Watching
+and commanding the boat from a ground station</a></li>
+</ul></li>
+<li><a href="#5-driving-it-modes--console" id="toc-5-driving-it-modes--console">5. Driving it: modes + console</a>
+<ul>
+<li><a href="#typing-commands-the-console" id="toc-typing-commands-the-console">Typing commands: the
+console</a></li>
+<li><a href="#a-first-drive-in-guided" id="toc-a-first-drive-in-guided">A first drive in GUIDED</a></li>
+<li><a href="#the-modes-you-will-use" id="toc-the-modes-you-will-use">The modes you will use</a></li>
+<li><a href="#manual-driving-lives-on-the-boat-not-the-sim" id="toc-manual-driving-lives-on-the-boat-not-the-sim">Manual driving
+lives on the boat, not the sim</a></li>
+<li><a href="#check-it-is-working" id="toc-check-it-is-working">Check it
+is working</a></li>
+</ul></li>
+<li><a href="#6-environment-params-meltemi-winds" id="toc-6-environment-params-meltemi-winds">6. Environment params
+(Meltemi winds)</a>
+<ul>
+<li><a href="#create-the-weather-file" id="toc-create-the-weather-file">Create the weather file</a></li>
+<li><a href="#launch-with-the-weather-on" id="toc-launch-with-the-weather-on">Launch with the weather on</a></li>
+<li><a href="#feel-the-difference" id="toc-feel-the-difference">Feel the
+difference</a></li>
+</ul></li>
+<li><a href="#7-missions--auto-mode" id="toc-7-missions--auto-mode">7.
+Missions / AUTO mode</a>
+<ul>
+<li><a href="#run-the-sample-mission" id="toc-run-the-sample-mission">Run the sample mission</a></li>
+<li><a href="#the-mission-commands" id="toc-the-mission-commands">The
+mission commands</a></li>
+<li><a href="#what-is-inside-the-mission-file" id="toc-what-is-inside-the-mission-file">What is inside the mission
+file</a></li>
+<li><a href="#build-your-own-mission-in-mission-planner" id="toc-build-your-own-mission-in-mission-planner">Build your own
+mission in Mission Planner</a></li>
+<li><a href="#run-a-mission-in-the-wind" id="toc-run-a-mission-in-the-wind">Run a mission in the wind</a></li>
+<li><a href="#going-further" id="toc-going-further">Going
+further</a></li>
+</ul></li>
+<li><a href="#8-multi-vehicle-sitl" id="toc-8-multi-vehicle-sitl">8.
+Multi-vehicle SITL</a>
+<ul>
+<li><a href="#starting-the-boats" id="toc-starting-the-boats">Starting
+the boats</a></li>
+<li><a href="#getting-every-boat-into-mission-planner" id="toc-getting-every-boat-into-mission-planner">Getting every boat into
+Mission Planner</a></li>
+<li><a href="#driving-the-boats" id="toc-driving-the-boats">Driving the
+boats</a></li>
+</ul></li>
+<li><a href="#9-shutdown-and-troubleshooting" id="toc-9-shutdown-and-troubleshooting">9. Shutdown and
+troubleshooting</a>
+<ul>
+<li><a href="#stopping-the-simulator" id="toc-stopping-the-simulator">Stopping the simulator</a></li>
+<li><a href="#messages-you-can-safely-ignore" id="toc-messages-you-can-safely-ignore">Messages you can safely
+ignore</a></li>
+<li><a href="#when-something-is-actually-wrong" id="toc-when-something-is-actually-wrong">When something is actually
+wrong</a></li>
+<li><a href="#if-the-map-will-not-open-older-setups-only" id="toc-if-the-map-will-not-open-older-setups-only">If the map will not
+open (older setups only)</a></li>
+</ul></li>
+<li><a href="#10-command-quick-reference" id="toc-10-command-quick-reference">10. Command quick reference</a>
+<ul>
+<li><a href="#start-the-simulator-section-4" id="toc-start-the-simulator-section-4">Start the simulator (section
+4)</a></li>
+<li><a href="#drive-the-boat-from-the-console-section-5" id="toc-drive-the-boat-from-the-console-section-5">Drive the boat from
+the console (section 5)</a></li>
+<li><a href="#run-a-mission-section-7" id="toc-run-a-mission-section-7">Run a mission (section 7)</a></li>
+<li><a href="#quick-checks-section-5" id="toc-quick-checks-section-5">Quick checks (section 5)</a></li>
+<li><a href="#stop-the-simulator-section-9" id="toc-stop-the-simulator-section-9">Stop the simulator (section
+9)</a></li>
+<li><a href="#connect-mission-planner-sections-4-and-7" id="toc-connect-mission-planner-sections-4-and-7">Connect Mission
+Planner (sections 4 and 7)</a></li>
+<li><a href="#add-a-second-boat-section-8" id="toc-add-a-second-boat-section-8">Add a second boat (section
+8)</a></li>
+</ul></li>
+</ul>
+</nav>
 <h2 id="1-what-sitl-is-and-what-this-lab-is-for">1. What SITL is, and
 what this lab is for</h2>
 <p>When you work with an Unmanned Surface Vessel (USV) (our little boats
@@ -1566,5 +1712,6 @@ again.</p>
 <p>This page is auto-generated from the lab&#39;s source notes; last updated 2026-06-27.</p>
 <p>It is a tested and corrected rewrite of last year&#39;s notes. The original Google Doc is kept for reference: <a href="https://docs.google.com/document/d/13W_Bh-QBzk0Rt4U89Gn3XtNYC5CmAfB9JG77nX1cjEk/edit">Lab 03 notes (Google Doc)</a>.</p>
 </footer>
+<a href="#top" class="back-to-top" aria-label="Back to top" title="Back to top">↑ Top</a>
 </body>
 </html>
