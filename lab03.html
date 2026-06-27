@@ -449,11 +449,12 @@ as administrator&quot;.</p></li>
 <div class="sourceCode" id="cb1"><pre class="sourceCode powershell"><code class="sourceCode powershell"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a>wsl <span class="op">--</span>install <span class="op">-</span>d Ubuntu-24<span class="op">.</span><span class="dv">04</span></span></code></pre></div>
 <p>This turns on the needed Windows features and installs Ubuntu 24.04.
 Reboot when it asks you to.</p>
-<p>We name the version on purpose. A plain <code>wsl --install</code>
-now installs the newest Ubuntu, which is so fresh that some of the tools
-this lab needs are not ready for it yet, so the install takes longer and
-hits avoidable snags. Ubuntu 24.04 is the tested, smooth path, so we ask
-for it by name.</p></li>
+<p>[<strong>Jun26 note</strong>]: We name the version on purpose. A
+plain <code>wsl --install</code> now installs the newest Ubuntu (26.04
+stable, published two months ago), which is so fresh that some of the
+tools this lab needs are not ready for it yet, so the install takes
+longer and hits avoidable snags. Ubuntu 24.04 is the tested, smooth
+path, so we ask for it by name.</p></li>
 <li><p>After the reboot, Ubuntu usually finishes setting itself up on
 its own and asks you to create a Linux username and password.</p>
 <p>On some machines nothing opens after the reboot: that first command
