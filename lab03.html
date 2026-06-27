@@ -226,10 +226,12 @@ not the sim</a></li>
 <li><a href="#environment-params-meltemi-winds" id="toc-environment-params-meltemi-winds"><span class="toc-section-number">6</span> Environment params (Meltemi
 winds)</a>
 <ul>
-<li><a href="#create-the-weather-file" id="toc-create-the-weather-file"><span class="toc-section-number">6.1</span> Create the weather file</a></li>
-<li><a href="#launch-with-the-weather-on" id="toc-launch-with-the-weather-on"><span class="toc-section-number">6.2</span> Launch with the weather
+<li><a href="#a-more-realistic-boat-for-this-section" id="toc-a-more-realistic-boat-for-this-section"><span class="toc-section-number">6.1</span> A more realistic boat for this
+section</a></li>
+<li><a href="#create-the-weather-file" id="toc-create-the-weather-file"><span class="toc-section-number">6.2</span> Create the weather file</a></li>
+<li><a href="#launch-with-the-weather-on" id="toc-launch-with-the-weather-on"><span class="toc-section-number">6.3</span> Launch with the weather
 on</a></li>
-<li><a href="#feel-the-difference" id="toc-feel-the-difference"><span class="toc-section-number">6.3</span> Feel the difference</a></li>
+<li><a href="#feel-the-difference" id="toc-feel-the-difference"><span class="toc-section-number">6.4</span> Feel the difference</a></li>
 </ul></li>
 <li><a href="#missions--auto-mode" id="toc-missions--auto-mode"><span class="toc-section-number">7</span> Missions / AUTO mode</a>
 <ul>
@@ -1012,66 +1014,104 @@ rest of the Cyclades, summer brings the <strong>Meltemi</strong>, a
 strong, dry wind out of the north that kicks up steep waves and drags a
 surface current along with it. (It is also called the Etesian wind; see
 <a href="https://en.wikipedia.org/wiki/Etesian" target="_blank" rel="noopener noreferrer">Wikipedia</a> for the meteorology and <a href="https://sailingheaven.com/sailing/meltemi/" target="_blank" rel="noopener noreferrer">this sailing guide</a> for what it feels like
-on the water.) The simulator can fake these conditions so you can watch
-the boat, and the modes from section 5, work against real weather before
-you ever put a real boat in the water.</p>
-<h3 data-number="6.1" id="create-the-weather-file"><span class="header-section-number">6.1</span> Create the weather file</h3>
+on the water.) In this section we let the simulator fake those
+conditions, so you can watch the modes from section 5 work against
+weather before you ever put a real boat in the water.</p>
+<h3 data-number="6.1" id="a-more-realistic-boat-for-this-section"><span class="header-section-number">6.1</span> A more realistic boat for this
+section</h3>
+<p>Up to now we launched with the plain Rover model. It is light and
+predictable, which is exactly what you want while learning the modes,
+but it has one limit: it knows nothing about water, so wind, waves, and
+currents do not touch it. For this section we switch to the simulator&#39;s
+<strong>motor boat</strong> model, which floats, rocks on the waves, and
+gets carried by a current. You turn it on by adding
+<code>-f motorboat</code> to the launch command, shown below. This is
+the only part of the lab that needs the water physics; everywhere else
+we stay on the plain model.</p>
+<p>One honest point about the wind itself. A motor boat has no sail, so
+in the simulator the wind does not push the boat directly. What a small
+powerboat actually feels in a Meltemi is the <strong>current</strong>
+the wind drives, which carries the boat, and the <strong>waves</strong>
+it raises, which rock it. So we recreate the Meltemi through those two
+effects rather than as a wind force.</p>
+<h3 data-number="6.2" id="create-the-weather-file"><span class="header-section-number">6.2</span> Create the weather file</h3>
 <p>Make a second parameter file next to <code>boat.parm</code>:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/maritime26/custom-parms/meltemi.parm</span></code></pre></div>
 <p>Put these lines in it:</p>
-<pre><code># A strong, gusty wind from the north.
-# Significant waves with occasional larger swells.
-# A considerable surface current.
-SIM_WIND_SPD 12       # Wind speed of 12 m/s (about 23 knots)
-SIM_WIND_DIR 0        # Wind from the north (typical for Meltemi)
-SIM_WIND_TURB 0.5     # Moderate turbulence
-SIM_WAVE_ENABLE 1     # Enable wave simulation
-SIM_WAVE_LENGTH 20    # 20-meter wavelength
-SIM_WAVE_AMP 1.5      # 1.5-meter wave height (3-meter peak-to-trough)
-SIM_WAVE_DIR 0        # Waves coming from the north
-SIM_WAVE_SPEED 6      # Wave speed of 6 m/s
-SIM_DRIFT_SPEED 1     # Surface current of 1 m/s (about 2 knots)
-SIM_DRIFT_TIME 5      # Drift changes direction every 5 seconds</code></pre>
-<p>Every line here starts with <code>SIM_</code>, which means it exists
-only inside the simulator. These settings tell the sim to fake wind,
-waves, and a current; a real autopilot on a real boat has no such
-settings and ignores them. In short:</p>
-<ul>
-<li><strong>Wind</strong> (<code>SIM_WIND_*</code>): a steady 12 m/s,
-about 23 knots, blowing from the north, with <code>SIM_WIND_TURB</code>
-adding gusts so it is not perfectly even.</li>
-<li><strong>Waves</strong> (<code>SIM_WAVE_*</code>): a moderate sea
-state, roughly 1.5 m waves rolling in from the north.</li>
-<li><strong>Current</strong> (<code>SIM_DRIFT_*</code>): water moving at
-about 1 m/s, 2 knots, that slowly shifts direction, so the boat is
-constantly nudged off course.</li>
-</ul>
-<h3 data-number="6.2" id="launch-with-the-weather-on"><span class="header-section-number">6.2</span> Launch with the weather on</h3>
-<p>Start the simulator the same way as in section 4, but add one more
-<code>--add-param-file</code> line for the weather file:</p>
-<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sim_vehicle.py</span> <span class="at">-v</span> Rover <span class="at">-L</span> Syros <span class="at">--out</span><span class="op">=</span>udp:127.0.0.1:14550 <span class="dt">\</span></span>
+<pre><code># The Meltemi, recreated as the two things a motor boat actually feels:
+# a surface current that carries the boat, and waves that rock it.
+
+# Surface current: about 1 m/s (2 knots), setting from the north, so flowing south.
+SIM_TIDE_SPEED 1
+SIM_TIDE_DIR 0
+
+# Sea state: rocks the boat for realism; it does not move the boat anywhere.
+SIM_WAVE_ENABLE 1     # turn wave simulation on
+SIM_WAVE_AMP 1.5      # 1.5 m wave height
+SIM_WAVE_LENGTH 20    # 20 m between crests
+SIM_WAVE_SPEED 6      # waves travel at 6 m/s
+SIM_WAVE_DIR 0        # waves coming from the north</code></pre>
+<p>Every line starts with <code>SIM_</code>, which means it lives only
+inside the simulator; a real autopilot on a real boat has no such
+settings and ignores them. The current is the part that moves the boat:
+<code>SIM_TIDE_DIR 0</code> means it sets from the north, so the water,
+and anything floating in it, drifts south at
+<code>SIM_TIDE_SPEED</code>, here 1 m/s. The waves only rock the boat;
+they make the sim feel like a real sea but do not carry the boat. Both
+the current and the waves take effect only once the boat is
+<strong>armed</strong>.</p>
+<p>(For the curious: the simulator does have a wind setting,
+<code>SIM_WIND_*</code>, but on this motor boat it does nothing, because
+there is no sail for the wind to act on. We leave it out so it does not
+look like the wind is moving the boat; the current is what does
+that.)</p>
+<h3 data-number="6.3" id="launch-with-the-weather-on"><span class="header-section-number">6.3</span> Launch with the weather on</h3>
+<p>Start the simulator as in section 4, but add
+<code>-f motorboat</code> to switch to the boat model, and a second
+<code>--add-param-file</code> line for the weather:</p>
+<div class="sourceCode" id="cb24"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="ex">sim_vehicle.py</span> <span class="at">-v</span> Rover <span class="at">-f</span> motorboat <span class="at">-L</span> Syros <span class="at">--out</span><span class="op">=</span>udp:127.0.0.1:14550 <span class="dt">\</span></span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>  <span class="at">--add-param-file</span><span class="op">=</span><span class="va">$HOME</span>/maritime26/custom-parms/boat.parm <span class="dt">\</span></span>
 <span id="cb24-3"><a href="#cb24-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--add-param-file</span><span class="op">=</span><span class="va">$HOME</span>/maritime26/custom-parms/meltemi.parm <span class="dt">\</span></span>
 <span id="cb24-4"><a href="#cb24-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">--map</span> <span class="at">--console</span></span></code></pre></div>
-<p>The two files stack: <code>boat.parm</code> makes it behave as a
-boat, and <code>meltemi.parm</code> adds the weather on top. To go back
-to calm water, just launch without the <code>meltemi.parm</code>
-line.</p>
-<h3 data-number="6.3" id="feel-the-difference"><span class="header-section-number">6.3</span> Feel the difference</h3>
-<p>Now run the same modes from section 5 and watch them work harder:</p>
+<p>The files stack: <code>boat.parm</code> carries the boat settings
+from before, and <code>meltemi.parm</code> adds the weather on top. To
+go back to flat calm, launch without the <code>meltemi.parm</code> line;
+to go back to the plain, weather-free boat, drop the
+<code>-f motorboat</code> part as well.</p>
+<h3 data-number="6.4" id="feel-the-difference"><span class="header-section-number">6.4</span> Feel the difference</h3>
+<p>Arm the boat, then run the same modes from section 5 and watch them
+work harder. (Remember that the current and waves only act once the boat
+is armed.)</p>
 <ul>
-<li><strong>HOLD</strong>: the motors idle and the boat slides away with
-the wind and current. In calm water it barely moved; now you can see it
-drift. This is exactly why HOLD is a poor choice at sea.</li>
-<li><strong>LOITER</strong>: the motors stay busy fighting to hold the
-spot. This is the maritime difference from section 5, now visible:
-LOITER actively resists the drift that HOLD gives in to.</li>
-<li><strong>GUIDED and AUTO</strong>: the boat angles into the current
-to reach a point and takes longer to get there, the same way a real boat
-has to crab against the wind.</li>
-<li><strong>RTL</strong>: coming home means pushing back against the
-weather, a good test of whether the boat can reliably return.</li>
+<li><strong>HOLD</strong>: the motors idle and the boat is carried off
+with the current, steadily downstream at about 1 m/s. In calm water it
+sat still; now you can watch it drift. This is exactly why HOLD is a
+poor choice at sea.</li>
+<li><strong>LOITER</strong>: the motors stay busy holding the spot,
+pulling the boat back whenever the current carries it off. In calm water
+LOITER looked just like HOLD; now the difference is plain, LOITER keeps
+station while HOLD gives in to the drift. (Do not read too much into
+which way the bow points while it holds. The boat keeps its position
+either by facing into the current or by backing against it, whichever
+needs less turning, so the heading is not always what you expect.)</li>
+<li><strong>GUIDED and AUTO</strong>: send the boat to a point across
+the current, for example by right-clicking well to the west on the map
+and choosing Fly To Here. It still reaches the point, but it gets there
+<strong>crabwise</strong>: the bow angles upstream into the current
+while the actual path over the ground stays straight toward the target.
+In Mission Planner you can see this as a gap between the heading line,
+where the nose points, and the ground-track line, where the boat is
+really going. The lean is largest when the leg runs straight across the
+current and smaller when the leg runs partly with or against it, so the
+trip back can look quite different from the trip out.</li>
+<li><strong>RTL</strong>: bringing the boat home means crabbing back
+across the current in the same way. How far it leans depends on the
+angle between the way home and the current.</li>
 </ul>
+<p>The motor boat also <strong>rocks</strong> on the waves, which shows
+up nicely on the Mission Planner attitude display and makes the whole
+thing feel much closer to a real boat at sea. The rocking is for
+realism; it does not move the boat.</p>
 <p>This is the closest the simulator gets to a real day on the water in
 the Cyclades, and it is a safe place to learn how each mode copes before
 a real sea trial.</p>
