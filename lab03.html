@@ -97,9 +97,11 @@ color: #1b1f24;
 background: #fff;
 }
 h1, h2, h3, h4 { line-height: 1.25; margin-top: 1.8em; }
-h1 { font-size: 1.9rem; border-bottom: 2px solid #d0d7de; padding-bottom: .3em; }
-h2 { font-size: 1.45rem; border-bottom: 1px solid #d0d7de; padding-bottom: .25em; }
-h3 { font-size: 1.2rem; }
+
+h1.title { font-size: 1.9rem; border-bottom: 2px solid #d0d7de; padding-bottom: .3em; }
+h1:not(.title) { font-size: 1.45rem; border-bottom: 1px solid #d0d7de; padding-bottom: .25em; }
+h2 { font-size: 1.2rem; }
+h3 { font-size: 1.05rem; }
 a { color: #0969da; }
 code {
 font-family: "DejaVu Sans Mono", "SFMono-Regular", Consolas, monospace;
@@ -167,124 +169,119 @@ Modes</h1>
 </header>
 <nav id="TOC" role="doc-toc">
 <ul>
-<li><a href="#what-sitl-is-and-what-this-lab-is-for" id="toc-what-sitl-is-and-what-this-lab-is-for"><span class="toc-section-number">0.1</span> What SITL is, and what this lab is
+<li><a href="#what-sitl-is-and-what-this-lab-is-for" id="toc-what-sitl-is-and-what-this-lab-is-for"><span class="toc-section-number">1</span> What SITL is, and what this lab is
 for</a>
 <ul>
-<li><a href="#one-autopilot-several-ways-to-command-it" id="toc-one-autopilot-several-ways-to-command-it"><span class="toc-section-number">0.1.1</span> One autopilot, several ways to
+<li><a href="#one-autopilot-several-ways-to-command-it" id="toc-one-autopilot-several-ways-to-command-it"><span class="toc-section-number">1.1</span> One autopilot, several ways to
 command it</a></li>
-<li><a href="#why-simulate-instead-of-just-using-the-boat" id="toc-why-simulate-instead-of-just-using-the-boat"><span class="toc-section-number">0.1.2</span> Why simulate instead of just
-using the boat</a></li>
-<li><a href="#it-is-yours-to-keep" id="toc-it-is-yours-to-keep"><span class="toc-section-number">0.1.3</span> It is yours to keep</a></li>
-<li><a href="#where-this-sits-in-the-bigger-picture" id="toc-where-this-sits-in-the-bigger-picture"><span class="toc-section-number">0.1.4</span> Where this sits in the bigger
+<li><a href="#why-simulate-instead-of-just-using-the-boat" id="toc-why-simulate-instead-of-just-using-the-boat"><span class="toc-section-number">1.2</span> Why simulate instead of just using
+the boat</a></li>
+<li><a href="#it-is-yours-to-keep" id="toc-it-is-yours-to-keep"><span class="toc-section-number">1.3</span> It is yours to keep</a></li>
+<li><a href="#where-this-sits-in-the-bigger-picture" id="toc-where-this-sits-in-the-bigger-picture"><span class="toc-section-number">1.4</span> Where this sits in the bigger
 picture</a></li>
-<li><a href="#what-sitl-does-not-do" id="toc-what-sitl-does-not-do"><span class="toc-section-number">0.1.5</span> What SITL does not do</a></li>
-<li><a href="#what-you-will-do-in-this-lab" id="toc-what-you-will-do-in-this-lab"><span class="toc-section-number">0.1.6</span> What you will do in this
+<li><a href="#what-sitl-does-not-do" id="toc-what-sitl-does-not-do"><span class="toc-section-number">1.5</span> What SITL does not do</a></li>
+<li><a href="#what-you-will-do-in-this-lab" id="toc-what-you-will-do-in-this-lab"><span class="toc-section-number">1.6</span> What you will do in this
 lab</a></li>
 </ul></li>
-<li><a href="#prerequisites--environment" id="toc-prerequisites--environment"><span class="toc-section-number">0.2</span> Prerequisites / environment</a>
+<li><a href="#prerequisites--environment" id="toc-prerequisites--environment"><span class="toc-section-number">2</span> Prerequisites / environment</a>
 <ul>
-<li><a href="#what-you-need" id="toc-what-you-need"><span class="toc-section-number">0.2.1</span> What you need</a></li>
-<li><a href="#windows-install-ubuntu-with-wsl2" id="toc-windows-install-ubuntu-with-wsl2"><span class="toc-section-number">0.2.2</span> Windows: install Ubuntu with
+<li><a href="#what-you-need" id="toc-what-you-need"><span class="toc-section-number">2.1</span> What you need</a></li>
+<li><a href="#windows-install-ubuntu-with-wsl2" id="toc-windows-install-ubuntu-with-wsl2"><span class="toc-section-number">2.2</span> Windows: install Ubuntu with
 WSL2</a></li>
-<li><a href="#check-that-graphical-apps-work" id="toc-check-that-graphical-apps-work"><span class="toc-section-number">0.2.3</span> Check that graphical apps
+<li><a href="#check-that-graphical-apps-work" id="toc-check-that-graphical-apps-work"><span class="toc-section-number">2.3</span> Check that graphical apps
 work</a></li>
-<li><a href="#if-the-xeyes-test-failed-add-an-x-server" id="toc-if-the-xeyes-test-failed-add-an-x-server"><span class="toc-section-number">0.2.4</span> If the xeyes test failed: add an
-X server</a></li>
-<li><a href="#macos" id="toc-macos"><span class="toc-section-number">0.2.5</span> macOS</a></li>
-<li><a href="#already-on-linux" id="toc-already-on-linux"><span class="toc-section-number">0.2.6</span> Already on Linux?</a></li>
+<li><a href="#if-the-xeyes-test-failed-add-an-x-server" id="toc-if-the-xeyes-test-failed-add-an-x-server"><span class="toc-section-number">2.4</span> If the xeyes test failed: add an X
+server</a></li>
+<li><a href="#macos" id="toc-macos"><span class="toc-section-number">2.5</span> macOS</a></li>
+<li><a href="#already-on-linux" id="toc-already-on-linux"><span class="toc-section-number">2.6</span> Already on Linux?</a></li>
 </ul></li>
-<li><a href="#build-sitl" id="toc-build-sitl"><span class="toc-section-number">0.3</span> Build SITL</a>
+<li><a href="#build-sitl" id="toc-build-sitl"><span class="toc-section-number">3</span> Build SITL</a>
 <ul>
-<li><a href="#get-the-source-code" id="toc-get-the-source-code"><span class="toc-section-number">0.3.1</span> Get the source code</a></li>
-<li><a href="#switch-to-a-stable-version" id="toc-switch-to-a-stable-version"><span class="toc-section-number">0.3.2</span> Switch to a stable
+<li><a href="#get-the-source-code" id="toc-get-the-source-code"><span class="toc-section-number">3.1</span> Get the source code</a></li>
+<li><a href="#switch-to-a-stable-version" id="toc-switch-to-a-stable-version"><span class="toc-section-number">3.2</span> Switch to a stable
 version</a></li>
-<li><a href="#install-the-prerequisites" id="toc-install-the-prerequisites"><span class="toc-section-number">0.3.3</span> Install the
-prerequisites</a></li>
-<li><a href="#compile-sitl" id="toc-compile-sitl"><span class="toc-section-number">0.3.4</span> Compile SITL</a></li>
-<li><a href="#quick-check-did-it-work" id="toc-quick-check-did-it-work"><span class="toc-section-number">0.3.5</span> Quick check: did it
-work?</a></li>
+<li><a href="#install-the-prerequisites" id="toc-install-the-prerequisites"><span class="toc-section-number">3.3</span> Install the prerequisites</a></li>
+<li><a href="#compile-sitl" id="toc-compile-sitl"><span class="toc-section-number">3.4</span> Compile SITL</a></li>
+<li><a href="#quick-check-did-it-work" id="toc-quick-check-did-it-work"><span class="toc-section-number">3.5</span> Quick check: did it work?</a></li>
 </ul></li>
-<li><a href="#running-sitl-for-the-first-time" id="toc-running-sitl-for-the-first-time"><span class="toc-section-number">0.4</span> Running SITL for the first
-time</a>
+<li><a href="#running-sitl-for-the-first-time" id="toc-running-sitl-for-the-first-time"><span class="toc-section-number">4</span> Running SITL for the first time</a>
 <ul>
-<li><a href="#set-the-boat-parameters-and-a-starting-location" id="toc-set-the-boat-parameters-and-a-starting-location"><span class="toc-section-number">0.4.1</span> Set the boat parameters and a
+<li><a href="#set-the-boat-parameters-and-a-starting-location" id="toc-set-the-boat-parameters-and-a-starting-location"><span class="toc-section-number">4.1</span> Set the boat parameters and a
 starting location</a></li>
-<li><a href="#a-folder-to-run-from" id="toc-a-folder-to-run-from"><span class="toc-section-number">0.4.2</span> A folder to run from</a></li>
-<li><a href="#what-each-part-of-the-command-does" id="toc-what-each-part-of-the-command-does"><span class="toc-section-number">0.4.3</span> What each part of the command
+<li><a href="#a-folder-to-run-from" id="toc-a-folder-to-run-from"><span class="toc-section-number">4.2</span> A folder to run from</a></li>
+<li><a href="#what-each-part-of-the-command-does" id="toc-what-each-part-of-the-command-does"><span class="toc-section-number">4.3</span> What each part of the command
 does</a></li>
-<li><a href="#watching-and-commanding-the-boat-from-a-ground-station" id="toc-watching-and-commanding-the-boat-from-a-ground-station"><span class="toc-section-number">0.4.4</span> Watching and commanding the boat
+<li><a href="#watching-and-commanding-the-boat-from-a-ground-station" id="toc-watching-and-commanding-the-boat-from-a-ground-station"><span class="toc-section-number">4.4</span> Watching and commanding the boat
 from a ground station</a></li>
 </ul></li>
-<li><a href="#driving-it-modes--console" id="toc-driving-it-modes--console"><span class="toc-section-number">0.5</span> Driving it: modes + console</a>
+<li><a href="#driving-it-modes--console" id="toc-driving-it-modes--console"><span class="toc-section-number">5</span> Driving it: modes + console</a>
 <ul>
-<li><a href="#typing-commands-the-console" id="toc-typing-commands-the-console"><span class="toc-section-number">0.5.1</span> Typing commands: the
+<li><a href="#typing-commands-the-console" id="toc-typing-commands-the-console"><span class="toc-section-number">5.1</span> Typing commands: the
 console</a></li>
-<li><a href="#a-first-drive-in-guided" id="toc-a-first-drive-in-guided"><span class="toc-section-number">0.5.2</span> A first drive in GUIDED</a></li>
-<li><a href="#the-modes-you-will-use" id="toc-the-modes-you-will-use"><span class="toc-section-number">0.5.3</span> The modes you will use</a></li>
-<li><a href="#manual-driving-lives-on-the-boat-not-the-sim" id="toc-manual-driving-lives-on-the-boat-not-the-sim"><span class="toc-section-number">0.5.4</span> Manual driving lives on the
-boat, not the sim</a></li>
-<li><a href="#check-it-is-working" id="toc-check-it-is-working"><span class="toc-section-number">0.5.5</span> Check it is working</a></li>
+<li><a href="#a-first-drive-in-guided" id="toc-a-first-drive-in-guided"><span class="toc-section-number">5.2</span> A first drive in GUIDED</a></li>
+<li><a href="#the-modes-you-will-use" id="toc-the-modes-you-will-use"><span class="toc-section-number">5.3</span> The modes you will use</a></li>
+<li><a href="#manual-driving-lives-on-the-boat-not-the-sim" id="toc-manual-driving-lives-on-the-boat-not-the-sim"><span class="toc-section-number">5.4</span> Manual driving lives on the boat,
+not the sim</a></li>
+<li><a href="#check-it-is-working" id="toc-check-it-is-working"><span class="toc-section-number">5.5</span> Check it is working</a></li>
 </ul></li>
-<li><a href="#environment-params-meltemi-winds" id="toc-environment-params-meltemi-winds"><span class="toc-section-number">0.6</span> Environment params (Meltemi
+<li><a href="#environment-params-meltemi-winds" id="toc-environment-params-meltemi-winds"><span class="toc-section-number">6</span> Environment params (Meltemi
 winds)</a>
 <ul>
-<li><a href="#a-more-realistic-boat-for-this-section" id="toc-a-more-realistic-boat-for-this-section"><span class="toc-section-number">0.6.1</span> A more realistic boat for this
+<li><a href="#a-more-realistic-boat-for-this-section" id="toc-a-more-realistic-boat-for-this-section"><span class="toc-section-number">6.1</span> A more realistic boat for this
 section</a></li>
-<li><a href="#create-the-weather-file" id="toc-create-the-weather-file"><span class="toc-section-number">0.6.2</span> Create the weather file</a></li>
-<li><a href="#launch-with-the-weather-on" id="toc-launch-with-the-weather-on"><span class="toc-section-number">0.6.3</span> Launch with the weather
+<li><a href="#create-the-weather-file" id="toc-create-the-weather-file"><span class="toc-section-number">6.2</span> Create the weather file</a></li>
+<li><a href="#launch-with-the-weather-on" id="toc-launch-with-the-weather-on"><span class="toc-section-number">6.3</span> Launch with the weather
 on</a></li>
-<li><a href="#feel-the-difference" id="toc-feel-the-difference"><span class="toc-section-number">0.6.4</span> Feel the difference</a></li>
+<li><a href="#feel-the-difference" id="toc-feel-the-difference"><span class="toc-section-number">6.4</span> Feel the difference</a></li>
 </ul></li>
-<li><a href="#missions--auto-mode" id="toc-missions--auto-mode"><span class="toc-section-number">0.7</span> Missions / AUTO mode</a>
+<li><a href="#missions--auto-mode" id="toc-missions--auto-mode"><span class="toc-section-number">7</span> Missions / AUTO mode</a>
 <ul>
-<li><a href="#run-the-sample-mission" id="toc-run-the-sample-mission"><span class="toc-section-number">0.7.1</span> Run the sample mission</a></li>
-<li><a href="#the-mission-commands" id="toc-the-mission-commands"><span class="toc-section-number">0.7.2</span> The mission commands</a></li>
-<li><a href="#what-is-inside-the-mission-file" id="toc-what-is-inside-the-mission-file"><span class="toc-section-number">0.7.3</span> What is inside the mission
+<li><a href="#run-the-sample-mission" id="toc-run-the-sample-mission"><span class="toc-section-number">7.1</span> Run the sample mission</a></li>
+<li><a href="#the-mission-commands" id="toc-the-mission-commands"><span class="toc-section-number">7.2</span> The mission commands</a></li>
+<li><a href="#what-is-inside-the-mission-file" id="toc-what-is-inside-the-mission-file"><span class="toc-section-number">7.3</span> What is inside the mission
 file</a></li>
-<li><a href="#build-your-own-mission-in-mission-planner" id="toc-build-your-own-mission-in-mission-planner"><span class="toc-section-number">0.7.4</span> Build your own mission in
-Mission Planner</a></li>
-<li><a href="#run-a-mission-in-the-wind" id="toc-run-a-mission-in-the-wind"><span class="toc-section-number">0.7.5</span> Run a mission in the
-wind</a></li>
-<li><a href="#going-further" id="toc-going-further"><span class="toc-section-number">0.7.6</span> Going further</a></li>
-</ul></li>
-<li><a href="#multi-vehicle-sitl" id="toc-multi-vehicle-sitl"><span class="toc-section-number">0.8</span> Multi-vehicle SITL</a>
-<ul>
-<li><a href="#starting-the-boats" id="toc-starting-the-boats"><span class="toc-section-number">0.8.1</span> Starting the boats</a></li>
-<li><a href="#getting-every-boat-into-mission-planner" id="toc-getting-every-boat-into-mission-planner"><span class="toc-section-number">0.8.2</span> Getting every boat into Mission
+<li><a href="#build-your-own-mission-in-mission-planner" id="toc-build-your-own-mission-in-mission-planner"><span class="toc-section-number">7.4</span> Build your own mission in Mission
 Planner</a></li>
-<li><a href="#driving-the-boats" id="toc-driving-the-boats"><span class="toc-section-number">0.8.3</span> Driving the boats</a></li>
+<li><a href="#run-a-mission-in-the-wind" id="toc-run-a-mission-in-the-wind"><span class="toc-section-number">7.5</span> Run a mission in the wind</a></li>
+<li><a href="#going-further" id="toc-going-further"><span class="toc-section-number">7.6</span> Going further</a></li>
 </ul></li>
-<li><a href="#shutdown-and-troubleshooting" id="toc-shutdown-and-troubleshooting"><span class="toc-section-number">0.9</span> Shutdown and troubleshooting</a>
+<li><a href="#multi-vehicle-sitl" id="toc-multi-vehicle-sitl"><span class="toc-section-number">8</span> Multi-vehicle SITL</a>
 <ul>
-<li><a href="#stopping-the-simulator" id="toc-stopping-the-simulator"><span class="toc-section-number">0.9.1</span> Stopping the simulator</a></li>
-<li><a href="#messages-you-can-safely-ignore" id="toc-messages-you-can-safely-ignore"><span class="toc-section-number">0.9.2</span> Messages you can safely
+<li><a href="#starting-the-boats" id="toc-starting-the-boats"><span class="toc-section-number">8.1</span> Starting the boats</a></li>
+<li><a href="#getting-every-boat-into-mission-planner" id="toc-getting-every-boat-into-mission-planner"><span class="toc-section-number">8.2</span> Getting every boat into Mission
+Planner</a></li>
+<li><a href="#driving-the-boats" id="toc-driving-the-boats"><span class="toc-section-number">8.3</span> Driving the boats</a></li>
+</ul></li>
+<li><a href="#shutdown-and-troubleshooting" id="toc-shutdown-and-troubleshooting"><span class="toc-section-number">9</span> Shutdown and troubleshooting</a>
+<ul>
+<li><a href="#stopping-the-simulator" id="toc-stopping-the-simulator"><span class="toc-section-number">9.1</span> Stopping the simulator</a></li>
+<li><a href="#messages-you-can-safely-ignore" id="toc-messages-you-can-safely-ignore"><span class="toc-section-number">9.2</span> Messages you can safely
 ignore</a></li>
-<li><a href="#when-something-is-actually-wrong" id="toc-when-something-is-actually-wrong"><span class="toc-section-number">0.9.3</span> When something is actually
+<li><a href="#when-something-is-actually-wrong" id="toc-when-something-is-actually-wrong"><span class="toc-section-number">9.3</span> When something is actually
 wrong</a></li>
-<li><a href="#if-the-map-will-not-open-older-setups-only" id="toc-if-the-map-will-not-open-older-setups-only"><span class="toc-section-number">0.9.4</span> If the map will not open (older
+<li><a href="#if-the-map-will-not-open-older-setups-only" id="toc-if-the-map-will-not-open-older-setups-only"><span class="toc-section-number">9.4</span> If the map will not open (older
 setups only)</a></li>
 </ul></li>
-<li><a href="#command-quick-reference" id="toc-command-quick-reference"><span class="toc-section-number">0.10</span> Command quick reference</a>
+<li><a href="#command-quick-reference" id="toc-command-quick-reference"><span class="toc-section-number">10</span> Command quick reference</a>
 <ul>
-<li><a href="#start-the-simulator-section-4" id="toc-start-the-simulator-section-4"><span class="toc-section-number">0.10.1</span> Start the simulator (section
+<li><a href="#start-the-simulator-section-4" id="toc-start-the-simulator-section-4"><span class="toc-section-number">10.1</span> Start the simulator (section
 4)</a></li>
-<li><a href="#drive-the-boat-from-the-console-section-5" id="toc-drive-the-boat-from-the-console-section-5"><span class="toc-section-number">0.10.2</span> Drive the boat from the console
+<li><a href="#drive-the-boat-from-the-console-section-5" id="toc-drive-the-boat-from-the-console-section-5"><span class="toc-section-number">10.2</span> Drive the boat from the console
 (section 5)</a></li>
-<li><a href="#run-a-mission-section-7" id="toc-run-a-mission-section-7"><span class="toc-section-number">0.10.3</span> Run a mission (section
+<li><a href="#run-a-mission-section-7" id="toc-run-a-mission-section-7"><span class="toc-section-number">10.3</span> Run a mission (section
 7)</a></li>
-<li><a href="#quick-checks-section-5" id="toc-quick-checks-section-5"><span class="toc-section-number">0.10.4</span> Quick checks (section
-5)</a></li>
-<li><a href="#stop-the-simulator-section-9" id="toc-stop-the-simulator-section-9"><span class="toc-section-number">0.10.5</span> Stop the simulator (section
+<li><a href="#quick-checks-section-5" id="toc-quick-checks-section-5"><span class="toc-section-number">10.4</span> Quick checks (section 5)</a></li>
+<li><a href="#stop-the-simulator-section-9" id="toc-stop-the-simulator-section-9"><span class="toc-section-number">10.5</span> Stop the simulator (section
 9)</a></li>
-<li><a href="#connect-mission-planner-sections-4-and-7" id="toc-connect-mission-planner-sections-4-and-7"><span class="toc-section-number">0.10.6</span> Connect Mission Planner
-(sections 4 and 7)</a></li>
-<li><a href="#add-a-second-boat-section-8" id="toc-add-a-second-boat-section-8"><span class="toc-section-number">0.10.7</span> Add a second boat (section
+<li><a href="#connect-mission-planner-sections-4-and-7" id="toc-connect-mission-planner-sections-4-and-7"><span class="toc-section-number">10.6</span> Connect Mission Planner (sections
+4 and 7)</a></li>
+<li><a href="#add-a-second-boat-section-8" id="toc-add-a-second-boat-section-8"><span class="toc-section-number">10.7</span> Add a second boat (section
 8)</a></li>
 </ul></li>
 </ul>
 </nav>
-<h2 data-number="0.1" id="what-sitl-is-and-what-this-lab-is-for"><span class="header-section-number">0.1</span> What SITL is, and what this lab
-is for</h2>
+<h1 data-number="1" id="what-sitl-is-and-what-this-lab-is-for"><span class="header-section-number">1</span> What SITL is, and what this lab
+is for</h1>
 <p>When you work with an Unmanned Surface Vessel (USV) (our little boats
 for example), the part that actually drives it is a piece of software
 called the <strong>autopilot</strong>. On our boats that software is
@@ -312,8 +309,8 @@ simulator is the same code that runs on the flight controller in your
 kit (a Pixhawk, configured to behave as a boat). It behaves the same way
 and is commanded the same way, so what you do here is not a toy version;
 it is the real autopilot, just without the water.</p>
-<h3 data-number="0.1.1" id="one-autopilot-several-ways-to-command-it"><span class="header-section-number">0.1.1</span> One autopilot, several ways
-to command it</h3>
+<h2 data-number="1.1" id="one-autopilot-several-ways-to-command-it"><span class="header-section-number">1.1</span> One autopilot, several ways to
+command it</h2>
 <p>Whatever you use to drive the boat, you are talking to the same
 autopilot underneath, and there are a few different ways to do that. You
 will meet most of them across these labs:</p>
@@ -339,8 +336,8 @@ from, so the skills carry in every direction: what arming means, what
 each driving mode does, and how a mission is built are the same whether
 you click them in Mission Planner, type them in the console, or send
 them from Python. Only the buttons differ.</p>
-<h3 data-number="0.1.2" id="why-simulate-instead-of-just-using-the-boat"><span class="header-section-number">0.1.2</span> Why simulate instead of just
-using the boat</h3>
+<h2 data-number="1.2" id="why-simulate-instead-of-just-using-the-boat"><span class="header-section-number">1.2</span> Why simulate instead of just
+using the boat</h2>
 <p>Running on your laptop instead of on the water buys you a lot:</p>
 <ul>
 <li><strong>No risk and no cost.</strong> There is no boat to damage, no
@@ -358,7 +355,7 @@ are expensive and depend on the weather, and a boat that misbehaves in
 open water can be genuinely hard to recover. Practicing in simulation
 first means you arrive at the water already knowing how the autopilot
 reacts.</p>
-<h3 data-number="0.1.3" id="it-is-yours-to-keep"><span class="header-section-number">0.1.3</span> It is yours to keep</h3>
+<h2 data-number="1.3" id="it-is-yours-to-keep"><span class="header-section-number">1.3</span> It is yours to keep</h2>
 <p>This lab is short and ArduPilot can do far more than we could cover
 in one sitting. That is on purpose. The goal is not to teach you
 everything; it is to get SITL installed and working on your laptop, give
@@ -374,8 +371,8 @@ so the odd small difference or rough edge is possible. If something does
 not match what you read here, it is usually a difference in your setup
 rather than a mistake on your part. This page also gets updated over
 time, so you can always come back for the latest version.</p>
-<h3 data-number="0.1.4" id="where-this-sits-in-the-bigger-picture"><span class="header-section-number">0.1.4</span> Where this sits in the bigger
-picture</h3>
+<h2 data-number="1.4" id="where-this-sits-in-the-bigger-picture"><span class="header-section-number">1.4</span> Where this sits in the bigger
+picture</h2>
 <p>On the real boats, the autopilot does not work alone. A small
 companion computer, a Raspberry Pi, rides alongside it running Python
 code that talks to the autopilot: reading its telemetry (the live data
@@ -387,7 +384,7 @@ with the simulator standing in for the whole boat. That is exactly what
 <strong>Lab04</strong> does, and it builds directly on the SITL
 environment you set up here. In short, <strong>this lab lays the
 foundation, and the next one puts code on top of it</strong>.</p>
-<h3 data-number="0.1.5" id="what-sitl-does-not-do"><span class="header-section-number">0.1.5</span> What SITL does not do</h3>
+<h2 data-number="1.5" id="what-sitl-does-not-do"><span class="header-section-number">1.5</span> What SITL does not do</h2>
 <p>SITL simulates the autopilot, its navigation sensors, and the boat&#39;s
 motion, and it does this faithfully. It does not simulate everything.
 There is no simulated camera and no computer vision, for example, so
@@ -397,8 +394,8 @@ and running missions, which SITL models well. (Other simulators such as
 Gazebo or AirSim can add visual detail, at the cost of a much heavier
 setup; ArduPilot&#39;s SITL is the simplest and most direct way in, which is
 why we use it.)</p>
-<h3 data-number="0.1.6" id="what-you-will-do-in-this-lab"><span class="header-section-number">0.1.6</span> What you will do in this
-lab</h3>
+<h2 data-number="1.6" id="what-you-will-do-in-this-lab"><span class="header-section-number">1.6</span> What you will do in this
+lab</h2>
 <p>Over the next few hours you will:</p>
 <ol type="1">
 <li>Install SITL and the tools it needs on your laptop.</li>
@@ -410,13 +407,12 @@ it to a point on the map, and bring it home.</li>
 <p>By the end you will have a working simulator you understand and own,
 ready to carry into the rest of the summer school.</p>
 <hr />
-<h2 data-number="0.2" id="prerequisites--environment"><span class="header-section-number">0.2</span> Prerequisites /
-environment</h2>
+<h1 data-number="2" id="prerequisites--environment"><span class="header-section-number">2</span> Prerequisites / environment</h1>
 <p>The goal of this section is to get a Linux environment ready on your
 machine, because ArduPilot&#39;s SITL is built and run on Linux. What you do
 depends on your operating system. Most of you are on Windows, so that is
 the path we cover in most detail.</p>
-<h3 data-number="0.2.1" id="what-you-need"><span class="header-section-number">0.2.1</span> What you need</h3>
+<h2 data-number="2.1" id="what-you-need"><span class="header-section-number">2.1</span> What you need</h2>
 <ul>
 <li>A 64-bit Intel or AMD computer.</li>
 <li>At least 4 GB of RAM (8 GB or more is comfortable).</li>
@@ -425,8 +421,8 @@ to 8 GB once everything is downloaded and built; the rest is breathing
 room.</li>
 <li>An internet connection, for downloading packages.</li>
 </ul>
-<h3 data-number="0.2.2" id="windows-install-ubuntu-with-wsl2"><span class="header-section-number">0.2.2</span> Windows: install Ubuntu with
-WSL2</h3>
+<h2 data-number="2.2" id="windows-install-ubuntu-with-wsl2"><span class="header-section-number">2.2</span> Windows: install Ubuntu with
+WSL2</h2>
 <p>Windows cannot build SITL directly, so you run a real Ubuntu Linux
 <em>inside</em> Windows using a built-in feature called
 <strong>WSL2</strong> (Windows Subsystem for Linux, version 2). Your
@@ -475,8 +471,8 @@ but if the one-command install is blocked, someone with admin rights has
 to enable the WSL features first. The official guide linked above covers
 that case step by step.</p>
 </blockquote>
-<h3 data-number="0.2.3" id="check-that-graphical-apps-work"><span class="header-section-number">0.2.3</span> Check that graphical apps
-work</h3>
+<h2 data-number="2.3" id="check-that-graphical-apps-work"><span class="header-section-number">2.3</span> Check that graphical apps
+work</h2>
 <p>SITL opens a map and a status window, so your Ubuntu needs to be able
 to show graphical (GUI) programs on your Windows desktop. On Windows 11
 this works out of the box through a feature called
@@ -493,8 +489,8 @@ pointer appears on your desktop, graphical apps work</strong>. Close it
 and move on to the next section. If nothing appears after a few seconds
 (most common on Windows 10), do the one-time setup just below, then run
 <code>xeyes</code> again to confirm.</p>
-<h3 data-number="0.2.4" id="if-the-xeyes-test-failed-add-an-x-server"><span class="header-section-number">0.2.4</span> If the xeyes test failed: add
-an X server</h3>
+<h2 data-number="2.4" id="if-the-xeyes-test-failed-add-an-x-server"><span class="header-section-number">2.4</span> If the xeyes test failed: add
+an X server</h2>
 <p>This step is almost always Windows 10 only; if <code>xeyes</code>
 already worked, skip it.</p>
 <p>The piece that lets Linux draw windows on your screen is called an
@@ -521,19 +517,19 @@ reopen the Ubuntu terminal.</li>
 <p>You only add the <code>~/.bashrc</code> line once, but <strong>VcXsrv
 has to be running</strong> whenever you launch SITL, so start it
 (through XLaunch) at the beginning of each session.</p>
-<h3 data-number="0.2.5" id="macos"><span class="header-section-number">0.2.5</span> macOS</h3>
+<h2 data-number="2.5" id="macos"><span class="header-section-number">2.5</span> macOS</h2>
 <p>SITL builds and runs on macOS too, but the setup is different: it
 uses the Homebrew package manager and a few extra steps. Follow
 ArduPilot&#39;s official macOS guide: <a href="https://ardupilot.org/dev/docs/building-setup-mac.html" target="_blank" rel="noopener noreferrer">https://ardupilot.org/dev/docs/building-setup-mac.html</a>.
 Once SITL is built, the running and driving parts of this lab are
 exactly the same.</p>
-<h3 data-number="0.2.6" id="already-on-linux"><span class="header-section-number">0.2.6</span> Already on Linux?</h3>
+<h2 data-number="2.6" id="already-on-linux"><span class="header-section-number">2.6</span> Already on Linux?</h2>
 <p>If your computer already runs Ubuntu (or a similar Linux), you do not
 need WSL2 or an X server; you are ready for the next section. We tested
 on Ubuntu; other distributions work too but may need small
 adjustments.</p>
 <hr />
-<h2 data-number="0.3" id="build-sitl"><span class="header-section-number">0.3</span> Build SITL</h2>
+<h1 data-number="3" id="build-sitl"><span class="header-section-number">3</span> Build SITL</h1>
 <p>Now you get ArduPilot&#39;s source code and compile SITL from it. This is
 the longest part of the setup. The download is around 2 GB and the build
 works your processor hard for several minutes, so before you start:
@@ -543,7 +539,7 @@ connection</strong>. If the machine suspends in the middle, a step near
 the end that asks for your password can time out and stop the
 install.</p>
 <p>Everything here is typed in the <strong>Ubuntu</strong> terminal.</p>
-<h3 data-number="0.3.1" id="get-the-source-code"><span class="header-section-number">0.3.1</span> Get the source code</h3>
+<h2 data-number="3.1" id="get-the-source-code"><span class="header-section-number">3.1</span> Get the source code</h2>
 <p>First make sure git (the tool that downloads the code) is installed,
 then clone the ArduPilot repository into your home folder:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="fu">sudo</span> apt update</span>
@@ -557,8 +553,7 @@ download is sizeable and can take a few minutes on a slow connection.
 (You may also see guides mention an <code>apt upgrade</code> or some
 optional GUI tools. Neither is needed for this lab; only git is
 essential, and the next script installs the rest.)</p>
-<h3 data-number="0.3.2" id="switch-to-a-stable-version"><span class="header-section-number">0.3.2</span> Switch to a stable
-version</h3>
+<h2 data-number="3.2" id="switch-to-a-stable-version"><span class="header-section-number">3.2</span> Switch to a stable version</h2>
 <p>A fresh clone leaves you on the <code>master</code> branch, which is
 the latest development code and can be unstable. For the lab we pin a
 tested, stable release instead.</p>
@@ -587,8 +582,7 @@ string. Do not be thrown if it reads
 <code>Rover-4.6.3</code>: ArduPilot keeps a moving &quot;stable&quot; tag that
 sits on the very same commit, and git just happens to report that name.
 You are on the right code either way.</p>
-<h3 data-number="0.3.3" id="install-the-prerequisites"><span class="header-section-number">0.3.3</span> Install the
-prerequisites</h3>
+<h2 data-number="3.3" id="install-the-prerequisites"><span class="header-section-number">3.3</span> Install the prerequisites</h2>
 <p>ArduPilot ships a script that installs everything else the build
 needs, both system packages and Python tools. Run it, then reload your
 shell settings so the new tools are available:</p>
@@ -626,7 +620,7 @@ is to close that terminal and open a fresh one; if you would rather
 reload it in place, run <code>source ~/.profile</code>. And if you ever
 want to step out of the environment on purpose, type
 <code>deactivate</code>.</p>
-<h3 data-number="0.3.4" id="compile-sitl"><span class="header-section-number">0.3.4</span> Compile SITL</h3>
+<h2 data-number="3.4" id="compile-sitl"><span class="header-section-number">3.4</span> Compile SITL</h2>
 <p>Run these from inside <code>~/ardupilot</code> (the folder you cloned
 into), with the <code>(venv-ardupilot)</code> prefix showing. If you
 opened a new terminal since the prereq step, the prefix comes back on
@@ -643,8 +637,7 @@ several minutes and ends with
 long stream of yellow warnings scroll past; those are not errors, so let
 them be and watch the <code>[ n/1299 ]</code> counter climb. The
 finished simulator lands at <code>build/sitl/bin/ardurover</code>.</p>
-<h3 data-number="0.3.5" id="quick-check-did-it-work"><span class="header-section-number">0.3.5</span> Quick check: did it
-work?</h3>
+<h2 data-number="3.5" id="quick-check-did-it-work"><span class="header-section-number">3.5</span> Quick check: did it work?</h2>
 <table>
 <thead>
 <tr class="header">
@@ -672,14 +665,14 @@ work?</h3>
 <p>With the build finished and the environment loaded, you are ready to
 start the simulator for the first time.</p>
 <hr />
-<h2 data-number="0.4" id="running-sitl-for-the-first-time"><span class="header-section-number">0.4</span> Running SITL for the first
-time</h2>
+<h1 data-number="4" id="running-sitl-for-the-first-time"><span class="header-section-number">4</span> Running SITL for the first
+time</h1>
 <p>Once the build has finished, you are almost ready to start the
 simulator. First we set up two things the launch command needs, a
 boat-specific settings file and a named starting location, and then we
 make a folder to run from. The setup you only do once.</p>
-<h3 data-number="0.4.1" id="set-the-boat-parameters-and-a-starting-location"><span class="header-section-number">0.4.1</span> Set the boat parameters and a
-starting location</h3>
+<h2 data-number="4.1" id="set-the-boat-parameters-and-a-starting-location"><span class="header-section-number">4.1</span> Set the boat parameters and a
+starting location</h2>
 <p><strong>Boat settings file.</strong> Make a working folder and create
 a parameter file inside it:</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/maritime26/custom-parms</span>
@@ -727,7 +720,7 @@ it: you see the <code>Field Elevation Set</code> message once at
 startup, then quiet. (Other ArduRover users have run into the same thing
 in SITL; see this <a href="https://discuss.ardupilot.org/t/how-to-disable-a-continuous-field-elevation-set-0m-message-sent-on-console-every-sec-sitl-ardurover-4-5-5/122567" target="_blank" rel="noopener noreferrer">ArduPilot forum
 thread</a>.)</p>
-<h3 data-number="0.4.2" id="a-folder-to-run-from"><span class="header-section-number">0.4.2</span> A folder to run from</h3>
+<h2 data-number="4.2" id="a-folder-to-run-from"><span class="header-section-number">4.2</span> A folder to run from</h2>
 <p>Make a separate folder to run the simulator from and move into
 it:</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="fu">mkdir</span> <span class="at">-p</span> ~/maritime26/sitl-test</span>
@@ -751,8 +744,8 @@ two windows open: a map, and a console showing the boat&#39;s status.</p>
 a few tiles read &quot;unavailable&quot; at first, zoom out a little or pan the
 map and they fill in. That is just the imagery service catching up, not
 a problem with the boat or your setup.</p>
-<h3 data-number="0.4.3" id="what-each-part-of-the-command-does"><span class="header-section-number">0.4.3</span> What each part of the command
-does</h3>
+<h2 data-number="4.3" id="what-each-part-of-the-command-does"><span class="header-section-number">4.3</span> What each part of the command
+does</h2>
 <p><strong><code>sim_vehicle.py</code></strong>: the script that starts
 everything. It builds the autopilot if needed, launches the simulator,
 and connects MAVProxy to it. (MAVProxy is the command line ground
@@ -801,8 +794,8 @@ window showing the boat&#39;s mode, whether it is armed (ready to move), its
 GPS fix, its battery, and a running list of messages. You still get a
 text command prompt in the terminal you launched from either way; this
 window just adds a cleaner view of the boat&#39;s state next to it.</p>
-<h3 data-number="0.4.4" id="watching-and-commanding-the-boat-from-a-ground-station"><span class="header-section-number">0.4.4</span> Watching and commanding the
-boat from a ground station</h3>
+<h2 data-number="4.4" id="watching-and-commanding-the-boat-from-a-ground-station"><span class="header-section-number">4.4</span> Watching and commanding the
+boat from a ground station</h2>
 <p>The map and console that MAVProxy gives you are enough for everything
 in this lab, so you can begin with those. If you want a fuller ground
 station with more features, the usual choice depends on your system:</p>
@@ -835,8 +828,7 @@ simulator, so it does no harm to keep it in from the start.</p>
 <p>Connecting Mission Planner step by step, and what to do if it does
 not find the boat on its own, is covered in section 7.</p>
 <hr />
-<h2 data-number="0.5" id="driving-it-modes--console"><span class="header-section-number">0.5</span> Driving it: modes +
-console</h2>
+<h1 data-number="5" id="driving-it-modes--console"><span class="header-section-number">5</span> Driving it: modes + console</h1>
 <p>You have already driven the real boat by hand: the joystick paired to
 its receiver, the thrusters turning, maybe a first run in the pool. SITL
 is the same idea on screen. It lets you rehearse how the boat behaves
@@ -846,8 +838,8 @@ telling the boat to go to a point on its own, and later running a whole
 route by itself. That is where we spend our time here, and it carries
 straight into Lab04, where Python sends the boat these same
 commands.</p>
-<h3 data-number="0.5.1" id="typing-commands-the-console"><span class="header-section-number">0.5.1</span> Typing commands: the
-console</h3>
+<h2 data-number="5.1" id="typing-commands-the-console"><span class="header-section-number">5.1</span> Typing commands: the
+console</h2>
 <p>The console is the text window where you type commands to the boat.
 (It is part of MAVProxy, the small ground station the simulator started
 for you.) Two commands you will use constantly:</p>
@@ -861,7 +853,7 @@ safe and will not move.</li>
 followed by the mode name, for example <code>mode GUIDED</code>. A mode
 is just a way of driving: who is in control, and how. The next part puts
 this to use.</p>
-<h3 data-number="0.5.2" id="a-first-drive-in-guided"><span class="header-section-number">0.5.2</span> A first drive in GUIDED</h3>
+<h2 data-number="5.2" id="a-first-drive-in-guided"><span class="header-section-number">5.2</span> A first drive in GUIDED</h2>
 <p>GUIDED mode is the one to start with. In GUIDED you point at a spot
 and the boat works out how to get there on its own. You do not need a
 joystick, which is why it makes the best first test in the
@@ -897,7 +889,7 @@ direction, and <strong>throttle</strong> for motor effort; the
 <strong>airspeed</strong> field just mirrors groundspeed (a boat has no
 airspeed sensor), and <strong>alt</strong> and <strong>climb</strong>
 stay near zero on the surface.</p>
-<h3 data-number="0.5.3" id="the-modes-you-will-use"><span class="header-section-number">0.5.3</span> The modes you will use</h3>
+<h2 data-number="5.3" id="the-modes-you-will-use"><span class="header-section-number">5.3</span> The modes you will use</h2>
 <p>ArduPilot has many modes; you only need a handful here. The
 boat-specific behaviour below depends on one setting we already loaded,
 <code>FRAME_CLASS=2</code>, which tells ArduPilot it is driving a boat
@@ -983,8 +975,8 @@ holds or circles around the launch point to stay put. This &quot;keep your
 position after you arrive&quot; behaviour is automatic once the vehicle is
 set up as a boat, and it applies in AUTO, GUIDED, and Smart RTL as well
 (see the ArduPilot <a href="https://ardupilot.org/rover/docs/rtl-mode.html" target="_blank" rel="noopener noreferrer">RTL mode</a> and <a href="https://ardupilot.org/rover/docs/loiter-mode.html" target="_blank" rel="noopener noreferrer">Loiter mode</a> docs).</p>
-<h3 data-number="0.5.4" id="manual-driving-lives-on-the-boat-not-the-sim"><span class="header-section-number">0.5.4</span> Manual driving lives on the
-boat, not the sim</h3>
+<h2 data-number="5.4" id="manual-driving-lives-on-the-boat-not-the-sim"><span class="header-section-number">5.4</span> Manual driving lives on the
+boat, not the sim</h2>
 <p>You will notice we never drive manually in the simulator. That is on
 purpose. Manual driving needs a joystick, and the radio link from a
 joystick to the boat is its own kind of signal, separate from MAVLink,
@@ -995,7 +987,7 @@ actual boat with its joystick, so in the simulator we focus on the
 digital commands instead. (If there is time later, connecting a real
 joystick to a ground station on the PC is something we can experiment
 with, but it is not part of the lab.)</p>
-<h3 data-number="0.5.5" id="check-it-is-working"><span class="header-section-number">0.5.5</span> Check it is working</h3>
+<h2 data-number="5.5" id="check-it-is-working"><span class="header-section-number">5.5</span> Check it is working</h2>
 <p>Two quick checks confirm the setup is sound, which matters because
 Lab04&#39;s Python will rely on both.</p>
 <p>Confirm the data link Python will use is open:</p>
@@ -1015,8 +1007,8 @@ can check any other parameter the same way.</p>
 send it, and shows these settings, your simulation environment is fully
 installed and ready for the rest of the lab.</p>
 <hr />
-<h2 data-number="0.6" id="environment-params-meltemi-winds"><span class="header-section-number">0.6</span> Environment params (Meltemi
-winds)</h2>
+<h1 data-number="6" id="environment-params-meltemi-winds"><span class="header-section-number">6</span> Environment params (Meltemi
+winds)</h1>
 <p>In section 5 the water was calm: the boat went exactly where you
 pointed it. Real sea trials will not be so kind. Around Syros and the
 rest of the Cyclades, summer brings the <strong>Meltemi</strong>, a
@@ -1026,8 +1018,8 @@ surface current along with it. (It is also called the Etesian wind; see
 on the water.) In this section we let the simulator fake those
 conditions, so you can watch the modes from section 5 work against
 weather before you ever put a real boat in the water.</p>
-<h3 data-number="0.6.1" id="a-more-realistic-boat-for-this-section"><span class="header-section-number">0.6.1</span> A more realistic boat for
-this section</h3>
+<h2 data-number="6.1" id="a-more-realistic-boat-for-this-section"><span class="header-section-number">6.1</span> A more realistic boat for this
+section</h2>
 <p>Up to now we launched with the plain Rover model. It is light and
 predictable, which is exactly what you want while learning the modes,
 but it has one limit: it knows nothing about water, so wind, waves, and
@@ -1043,7 +1035,7 @@ powerboat actually feels in a Meltemi is the <strong>current</strong>
 the wind drives, which carries the boat, and the <strong>waves</strong>
 it raises, which rock it. So we recreate the Meltemi through those two
 effects rather than as a wind force.</p>
-<h3 data-number="0.6.2" id="create-the-weather-file"><span class="header-section-number">0.6.2</span> Create the weather file</h3>
+<h2 data-number="6.2" id="create-the-weather-file"><span class="header-section-number">6.2</span> Create the weather file</h2>
 <p>Make a second parameter file next to <code>boat.parm</code>:</p>
 <div class="sourceCode" id="cb22"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="fu">nano</span> ~/maritime26/custom-parms/meltemi.parm</span></code></pre></div>
 <p>Put these lines in it:</p>
@@ -1086,8 +1078,7 @@ its fierce wind and water, and closer to Syros the straits around Tinos
 and Mykonos and the Paros to Naxos channel can run strong too. So think
 of our 1.5 m/s as a busy strait on a rough day, not the calm open sea
 off Syros.</p>
-<h3 data-number="0.6.3" id="launch-with-the-weather-on"><span class="header-section-number">0.6.3</span> Launch with the weather
-on</h3>
+<h2 data-number="6.3" id="launch-with-the-weather-on"><span class="header-section-number">6.3</span> Launch with the weather on</h2>
 <p>Start the simulator as in section 4, but add
 <code>-f motorboat</code> to switch to the boat model, and a second
 <code>--add-param-file</code> line for the weather:</p>
@@ -1100,7 +1091,7 @@ from before, and <code>meltemi.parm</code> adds the weather on top. To
 go back to flat calm, launch without the <code>meltemi.parm</code> line;
 to go back to the plain, weather-free boat, drop the
 <code>-f motorboat</code> part as well.</p>
-<h3 data-number="0.6.4" id="feel-the-difference"><span class="header-section-number">0.6.4</span> Feel the difference</h3>
+<h2 data-number="6.4" id="feel-the-difference"><span class="header-section-number">6.4</span> Feel the difference</h2>
 <p>Arm the boat, then run the same modes from section 5 and watch them
 work harder. (Remember that the current and waves only act once the boat
 is armed.)</p>
@@ -1141,7 +1132,7 @@ realism; it does not move the boat.</p>
 the Cyclades, and it is a safe place to learn how each mode copes before
 a real sea trial.</p>
 <hr />
-<h2 data-number="0.7" id="missions--auto-mode"><span class="header-section-number">0.7</span> Missions / AUTO mode</h2>
+<h1 data-number="7" id="missions--auto-mode"><span class="header-section-number">7</span> Missions / AUTO mode</h1>
 <p>So far you have driven the boat one move at a time: in GUIDED you
 pointed at a spot and it went there, and you did the same by hand on the
 real boat. A mission is the next step up. Instead of commanding one
@@ -1154,7 +1145,7 @@ builds on when Python sends the boat its instructions.</p>
 boat needs two things before it will go: a mission loaded into it, and
 to be armed and switched to AUTO. With both in place, it sets off
 immediately.</p>
-<h3 data-number="0.7.1" id="run-the-sample-mission"><span class="header-section-number">0.7.1</span> Run the sample mission</h3>
+<h2 data-number="7.1" id="run-the-sample-mission"><span class="header-section-number">7.1</span> Run the sample mission</h2>
 <p>So everyone starts from the same route, we give you a ready-made
 mission, <code>simple_nisaki.txt</code>. You create it the same way you
 made the parameter files earlier. Open a new file in your missions
@@ -1203,7 +1194,7 @@ disarm</code></pre>
 <p>One handy detail: disarming resets the mission back to the start, so
 to run it again you just arm once more in AUTO. You do not need to
 reload the file.</p>
-<h3 data-number="0.7.2" id="the-mission-commands"><span class="header-section-number">0.7.2</span> The mission commands</h3>
+<h2 data-number="7.2" id="the-mission-commands"><span class="header-section-number">7.2</span> The mission commands</h2>
 <p>A few console commands cover everything you need:</p>
 <table>
 <thead>
@@ -1227,8 +1218,8 @@ reload the file.</p>
 </tr>
 </tbody>
 </table>
-<h3 data-number="0.7.3" id="what-is-inside-the-mission-file"><span class="header-section-number">0.7.3</span> What is inside the mission
-file</h3>
+<h2 data-number="7.3" id="what-is-inside-the-mission-file"><span class="header-section-number">7.3</span> What is inside the mission
+file</h2>
 <p>You do not need to understand the file to run the mission, but it is
 worth a quick look so you are not copying numbers blindly. Open
 <code>simple_nisaki.txt</code> in a text editor. The first line is
@@ -1319,8 +1310,8 @@ references:</p>
 <li>The complete list of mission commands, and what each column means
 for Rover: <a href="https://ardupilot.org/rover/docs/common-mavlink-mission-command-messages-mav_cmd.html" target="_blank" rel="noopener noreferrer">https://ardupilot.org/rover/docs/common-mavlink-mission-command-messages-mav_cmd.html</a></li>
 </ul>
-<h3 data-number="0.7.4" id="build-your-own-mission-in-mission-planner"><span class="header-section-number">0.7.4</span> Build your own mission in
-Mission Planner</h3>
+<h2 data-number="7.4" id="build-your-own-mission-in-mission-planner"><span class="header-section-number">7.4</span> Build your own mission in
+Mission Planner</h2>
 <p>Loading a ready-made file is fine for a first run, but the skill you
 actually want is building a route yourself, and the easiest way to do
 that is to draw it on a map. We use <strong>Mission Planner</strong> for
@@ -1406,8 +1397,7 @@ points only reach the boat after a final click, so for building missions
 we recommend Mission Planner. On native Linux or macOS, where Mission
 Planner is not available, QGroundControl&#39;s Plan view builds and runs
 missions in the same way.</p>
-<h3 data-number="0.7.5" id="run-a-mission-in-the-wind"><span class="header-section-number">0.7.5</span> Run a mission in the
-wind</h3>
+<h2 data-number="7.5" id="run-a-mission-in-the-wind"><span class="header-section-number">7.5</span> Run a mission in the wind</h2>
 <p>Everything above ran in calm water. You can put a mission through the
 Meltemi weather from section 6 just as easily: launch with the
 <code>meltemi.parm</code> line added, then load and run the same
@@ -1416,13 +1406,13 @@ on the line between points, takes longer to get there, and holds the
 final point more actively against the drift. It is the same route, now
 tested against the kind of conditions a real sea trial would throw at
 it.</p>
-<h3 data-number="0.7.6" id="going-further"><span class="header-section-number">0.7.6</span> Going further</h3>
+<h2 data-number="7.6" id="going-further"><span class="header-section-number">7.6</span> Going further</h2>
 <p>Sending a mission from your own Python code, rather than loading it
 in the console, is exactly what Lab04 is about. The route you just ran
 by hand is the same thing your companion-computer code will build and
 command there.</p>
 <hr />
-<h2 data-number="0.8" id="multi-vehicle-sitl"><span class="header-section-number">0.8</span> Multi-vehicle SITL</h2>
+<h1 data-number="8" id="multi-vehicle-sitl"><span class="header-section-number">8</span> Multi-vehicle SITL</h1>
 <p>The companion-computer projects in Lab04 coordinate several boats at
 once: keeping formation, follow-the-leader, splitting an area to survey
 it faster. To rehearse that here we run two or three SITL boats at the
@@ -1437,7 +1427,7 @@ again:</p>
 <pre><code>Syros2=37.439142,24.945389,0.1,180
 Syros3=37.438962,24.945162,0.1,180
 Syros4=37.438782,24.944935,0.1,180</code></pre>
-<h3 data-number="0.8.1" id="starting-the-boats"><span class="header-section-number">0.8.1</span> Starting the boats</h3>
+<h2 data-number="8.1" id="starting-the-boats"><span class="header-section-number">8.1</span> Starting the boats</h2>
 <p>Each boat is a separate copy of the simulator, run from its own
 terminal and its own folder, just like the single boat in section 4 but
 with a few extra flags so the copies do not clash.</p>
@@ -1476,8 +1466,8 @@ so it does not appear on top of boat 1.</li>
 <li>one extra <code>--out</code>: the line that actually gets boat 2
 into Mission Planner, covered next.</li>
 </ul>
-<h3 data-number="0.8.2" id="getting-every-boat-into-mission-planner"><span class="header-section-number">0.8.2</span> Getting every boat into
-Mission Planner</h3>
+<h2 data-number="8.2" id="getting-every-boat-into-mission-planner"><span class="header-section-number">8.2</span> Getting every boat into Mission
+Planner</h2>
 <p>In section 4 you saw that inside WSL the simulator sends the first
 boat across to Windows by itself, so Mission Planner finds it on port
 14550 with no setup. It does the same for every extra boat, but with a
@@ -1525,7 +1515,7 @@ and Mission Planner separates them by id.</p>
 <code>--instance 2</code>, <code>--sysid 3</code>,
 <code>-L Syros3</code>, and the same explicit
 <code>--out=udp:&lt;your-windows-address&gt;:14550</code>.</p>
-<h3 data-number="0.8.3" id="driving-the-boats"><span class="header-section-number">0.8.3</span> Driving the boats</h3>
+<h2 data-number="8.3" id="driving-the-boats"><span class="header-section-number">8.3</span> Driving the boats</h2>
 <p>Mission Planner here is a <strong>viewer</strong>: it shows you all
 the boats together. It is not a reliable way to <em>drive</em> one
 particular boat, because the boats share its single connection, so a
@@ -1545,12 +1535,11 @@ system id (<code>output sysid ...</code>). It has a long-standing bug
 that can cut off control of all the boats at once, so do not use it. The
 plain second <code>--out</code> we used above is the reliable way.</p>
 <hr />
-<h2 data-number="0.9" id="shutdown-and-troubleshooting"><span class="header-section-number">0.9</span> Shutdown and
-troubleshooting</h2>
+<h1 data-number="9" id="shutdown-and-troubleshooting"><span class="header-section-number">9</span> Shutdown and troubleshooting</h1>
 <p>Most of what looks like an error in SITL is not one. This section
 sorts the harmless noise from the real problems and points you to the
 fix for each, and it covers how to stop the simulator cleanly.</p>
-<h3 data-number="0.9.1" id="stopping-the-simulator"><span class="header-section-number">0.9.1</span> Stopping the simulator</h3>
+<h2 data-number="9.1" id="stopping-the-simulator"><span class="header-section-number">9.1</span> Stopping the simulator</h2>
 <p>To stop SITL, press Ctrl-C in the terminal where you launched it.
 That shuts the simulator down. You may see a short red error traceback
 as it exits; that is harmless, just the program tearing itself down.</p>
@@ -1559,8 +1548,8 @@ own terminal the same way. If a later launch complains that an address
 or port is already in use, a simulator process is still running in the
 background; clear any leftovers with:</p>
 <div class="sourceCode" id="cb42"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pkill</span> <span class="at">-f</span> ardurover</span></code></pre></div>
-<h3 data-number="0.9.2" id="messages-you-can-safely-ignore"><span class="header-section-number">0.9.2</span> Messages you can safely
-ignore</h3>
+<h2 data-number="9.2" id="messages-you-can-safely-ignore"><span class="header-section-number">9.2</span> Messages you can safely
+ignore</h2>
 <p>A running simulator prints a lot of text, and some of it looks
 alarming without being a problem. The common harmless ones:</p>
 <ul>
@@ -1579,8 +1568,8 @@ That is just the program shutting down, and is safe to ignore.</li>
 are not errors. As long as the simulator comes up, or the build ends
 with <code>finished successfully</code>, you are fine.</li>
 </ul>
-<h3 data-number="0.9.3" id="when-something-is-actually-wrong"><span class="header-section-number">0.9.3</span> When something is actually
-wrong</h3>
+<h2 data-number="9.3" id="when-something-is-actually-wrong"><span class="header-section-number">9.3</span> When something is actually
+wrong</h2>
 <table>
 <thead>
 <tr class="header">
@@ -1656,8 +1645,8 @@ viewer; see section 8. A single boat&#39;s map is fine</td>
 </tr>
 </tbody>
 </table>
-<h3 data-number="0.9.4" id="if-the-map-will-not-open-older-setups-only"><span class="header-section-number">0.9.4</span> If the map will not open
-(older setups only)</h3>
+<h2 data-number="9.4" id="if-the-map-will-not-open-older-setups-only"><span class="header-section-number">9.4</span> If the map will not open (older
+setups only)</h2>
 <p>On some older setups the map window crashes on startup with an error
 mentioning OpenCV and NumPy. These are two helper libraries the map
 viewer uses, one for images (OpenCV, imported in Python as
@@ -1675,13 +1664,13 @@ which also means it is new enough not to need this fix. Leave the
 libraries alone; your map problem is something else, most likely the
 display setup in section 2.</p>
 <hr />
-<h2 data-number="0.10" id="command-quick-reference"><span class="header-section-number">0.10</span> Command quick reference</h2>
+<h1 data-number="10" id="command-quick-reference"><span class="header-section-number">10</span> Command quick reference</h1>
 <p>A one-page reminder of the commands from this lab; each block points
 back to the section with the full explanation. Everything in the console
 blocks is typed into the MAVProxy console, the text window you launched
 the simulator from.</p>
-<h3 data-number="0.10.1" id="start-the-simulator-section-4"><span class="header-section-number">0.10.1</span> Start the simulator (section
-4)</h3>
+<h2 data-number="10.1" id="start-the-simulator-section-4"><span class="header-section-number">10.1</span> Start the simulator (section
+4)</h2>
 <div class="sourceCode" id="cb44"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/maritime26/sitl-test</span>
 <span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sim_vehicle.py</span> <span class="at">-v</span> Rover <span class="at">-L</span> Syros <span class="at">--out</span><span class="op">=</span>udp:127.0.0.1:14550 <span class="dt">\</span></span>
 <span id="cb44-3"><a href="#cb44-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--add-param-file</span><span class="op">=</span><span class="va">$HOME</span>/maritime26/custom-parms/boat.parm <span class="dt">\</span></span>
@@ -1689,8 +1678,8 @@ the simulator from.</p>
 <p>To run it in the Meltemi weather (section 6), add a second parameter
 file to the command:</p>
 <div class="sourceCode" id="cb45"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a>  <span class="ex">--add-param-file=</span><span class="va">$HOME</span><span class="ex">/maritime26/custom-parms/meltemi.parm</span></span></code></pre></div>
-<h3 data-number="0.10.2" id="drive-the-boat-from-the-console-section-5"><span class="header-section-number">0.10.2</span> Drive the boat from the
-console (section 5)</h3>
+<h2 data-number="10.2" id="drive-the-boat-from-the-console-section-5"><span class="header-section-number">10.2</span> Drive the boat from the
+console (section 5)</h2>
 <table>
 <thead>
 <tr class="header">
@@ -1731,31 +1720,29 @@ mirrors groundspeed on a boat)</td>
 </tr>
 </tbody>
 </table>
-<h3 data-number="0.10.3" id="run-a-mission-section-7"><span class="header-section-number">0.10.3</span> Run a mission (section
-7)</h3>
+<h2 data-number="10.3" id="run-a-mission-section-7"><span class="header-section-number">10.3</span> Run a mission (section 7)</h2>
 <pre><code>wp load ../missions/simple_nisaki.txt   # load a route from a file
 wp list                                 # show the loaded route
 mode AUTO                               # then arm to set it off
 arm throttle
 wp clear                                # remove all waypoints</code></pre>
-<h3 data-number="0.10.4" id="quick-checks-section-5"><span class="header-section-number">0.10.4</span> Quick checks (section
-5)</h3>
+<h2 data-number="10.4" id="quick-checks-section-5"><span class="header-section-number">10.4</span> Quick checks (section 5)</h2>
 <pre><code>output list               # data links; should include 127.0.0.1:14550
 param show FRAME_CLASS     # 2 means the boat settings loaded
 param set ARMING_CHECK 0   # turn off pre-arm checks: SIMULATOR ONLY</code></pre>
-<h3 data-number="0.10.5" id="stop-the-simulator-section-9"><span class="header-section-number">0.10.5</span> Stop the simulator (section
-9)</h3>
+<h2 data-number="10.5" id="stop-the-simulator-section-9"><span class="header-section-number">10.5</span> Stop the simulator (section
+9)</h2>
 <p>Press <strong>Ctrl-C</strong> in the terminal. If a leftover process
 then blocks the next launch:</p>
 <div class="sourceCode" id="cb48"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb48-1"><a href="#cb48-1" aria-hidden="true" tabindex="-1"></a><span class="ex">pkill</span> <span class="at">-f</span> ardurover</span></code></pre></div>
-<h3 data-number="0.10.6" id="connect-mission-planner-sections-4-and-7"><span class="header-section-number">0.10.6</span> Connect Mission Planner
-(sections 4 and 7)</h3>
+<h2 data-number="10.6" id="connect-mission-planner-sections-4-and-7"><span class="header-section-number">10.6</span> Connect Mission Planner
+(sections 4 and 7)</h2>
 <p>Set the connection to <strong>UDP</strong>, port
 <strong>14550</strong>. On a default WSL setup, point the launch
 command&#39;s <code>--out</code> at your Windows address, found with:</p>
 <div class="sourceCode" id="cb49"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb49-1"><a href="#cb49-1" aria-hidden="true" tabindex="-1"></a><span class="ex">ip</span> route show default <span class="kw">|</span> <span class="fu">awk</span> <span class="st">&#39;{print $3}&#39;</span>   <span class="co"># your Windows host address</span></span></code></pre></div>
-<h3 data-number="0.10.7" id="add-a-second-boat-section-8"><span class="header-section-number">0.10.7</span> Add a second boat (section
-8)</h3>
+<h2 data-number="10.7" id="add-a-second-boat-section-8"><span class="header-section-number">10.7</span> Add a second boat (section
+8)</h2>
 <div class="sourceCode" id="cb50"><pre class="sourceCode bash"><code class="sourceCode bash"><span id="cb50-1"><a href="#cb50-1" aria-hidden="true" tabindex="-1"></a><span class="bu">cd</span> ~/maritime26/sitl-test2</span>
 <span id="cb50-2"><a href="#cb50-2" aria-hidden="true" tabindex="-1"></a><span class="ex">sim_vehicle.py</span> <span class="at">-v</span> Rover <span class="at">--instance</span> 1 <span class="at">--sysid</span> 2 <span class="at">-L</span> Syros2 <span class="dt">\</span></span>
 <span id="cb50-3"><a href="#cb50-3" aria-hidden="true" tabindex="-1"></a>  <span class="at">--add-param-file</span><span class="op">=</span><span class="va">$HOME</span>/maritime26/custom-parms/boat.parm <span class="dt">\</span></span>
